@@ -115,6 +115,8 @@ export default function CharacterChatPanel({
 
   // Toggle buttons expansion state
   const [isButtonsExpanded, setIsButtonsExpanded] = useState(false);
+  // Track which message was recently copied (for tooltip feedback)
+  const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
   // Control panel expansion state
   const [isControlPanelExpanded, setIsControlPanelExpanded] = useState(false);
 
@@ -1111,12 +1113,18 @@ export default function CharacterChatPanel({
                           onClick={() => {
                             trackButtonClick("page", "复制消息");
                             navigator.clipboard.writeText(message.content.replace(/<[^>]*>/g, ""));
+                            setCopiedMessageId(message.id);
+                            setTimeout(() => setCopiedMessageId(null), 2000);
                           }}
                           className="ml-1 w-6 h-6 flex items-center justify-center text-[#a18d6f] hover:text-blue-400 bg-[#1c1c1c] rounded-lg border border-[#333333] shadow-inner transition-all duration-300 hover:border-[#444444] hover:shadow-[0_0_8px_rgba(59,130,246,0.4)] group relative"
                           data-tooltip={t("characterChat.copyMessage")}
                         >
-                          <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-[#2a261f] text-[#f4e8c1] text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap border border-[#534741]">
-                            {t("characterChat.copyMessage")}
+                          <div className={`absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 text-xs rounded transition-opacity duration-200 whitespace-nowrap border ${
+                            copiedMessageId === message.id
+                              ? "bg-green-600 text-white border-green-500 opacity-100"
+                              : "bg-[#2a261f] text-[#f4e8c1] border-[#534741] opacity-0 group-hover:opacity-100"
+                          }`}>
+                            {copiedMessageId === message.id ? t("characterChat.messageCopied") : t("characterChat.copyMessage")}
                           </div>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

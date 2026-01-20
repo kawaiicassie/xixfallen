@@ -8,6 +8,7 @@ import { useLanguage } from "@/app/i18n";
 import { isUpdateAvailable, fetchLatestRelease } from "@/utils/version-compare";
 import "@/app/styles/fantasy-ui.css";
 import { useAuth } from "@/hooks/useAuth";
+import SidebarRecentChats from "@/components/SidebarRecentChats";
 
 // Current app version from package.json
 const CURRENT_VERSION = "1.1.9";
@@ -247,6 +248,9 @@ export default function Sidebar({ isOpen, toggleSidebar, openLoginModal, openAcc
             </div>
           </li>
         </ul>
+
+        {/* Recent Chats Section */}
+        <SidebarRecentChats isOpen={isOpen} />
       </nav>
       <div className="relative mt-auto pt-4 px-2 mb-3 transition-all duration-300 overflow-hidden group/footer">
         <div className="absolute top-0 left-0 right-0 h-[0.5px] bg-gradient-to-r from-transparent via-[#f8d36a] to-transparent opacity-70"></div>

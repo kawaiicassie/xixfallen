@@ -488,6 +488,7 @@
     "disableStreaming": "Disable Streaming",
     "jumpToMessage": "Jump to Message",
     "copyMessage": "Copy Message",
+    "messageCopied": "Copied!",
     "regenerateMessage": "Regenerate Message",
     "enableFastModel": "Enable Fast Mode",
     "disableFastModel": "Disable Fast Mode",
@@ -898,6 +899,14 @@
     "responsePlaceholder": "Edit the response content...",
     "resetLayout": "Reset Layout",
     "manualPositions": "Manual Positions"
+  },
+  "recentChats": {
+    "title": "Recent Chats",
+    "noChats": "No chat history yet",
+    "untitled": "Untitled Branch",
+    "currentBranch": "Current",
+    "messages": "messages",
+    "switchBranch": "Switch to this branch"
   },
   "downloadModal": {
     "title": "Character Market",

@@ -490,6 +490,7 @@
     "disableStreaming": "禁用流式输出",
     "jumpToMessage": "跳转到此消息",
     "copyMessage": "复制消息",
+    "messageCopied": "已复制!",
     "regenerateMessage": "重新生成消息",
     "enableFastModel": "开启快速模式",
     "disableFastModel": "关闭快速模式",
@@ -685,6 +686,14 @@
     "responsePlaceholder": "编辑回复内容...",
     "resetLayout": "重置布局",
     "manualPositions": "手动位置"
+  },
+  "recentChats": {
+    "title": "最近对话",
+    "noChats": "暂无对话记录",
+    "untitled": "未命名分支",
+    "currentBranch": "当前",
+    "messages": "条消息",
+    "switchBranch": "切换到此分支"
   },
   "downloadModal": {
     "title": "角色市场",

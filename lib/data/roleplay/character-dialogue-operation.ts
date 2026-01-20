@@ -257,12 +257,87 @@ export class LocalCharacterDialogueOperations {
 
   static async nodeExists(characterId: string, nodeId: string): Promise<boolean> {
     if (nodeId === "root") return true;
-    
+
     const dialogueTree = await this.getDialogueTreeById(characterId);
     if (!dialogueTree || !dialogueTree.nodes || dialogueTree.nodes.length === 0) {
       return false;
     }
 
     return dialogueTree.nodes.some(node => node.nodeId === nodeId);
+  }
+
+  /**
+   * Get all leaf branches (endpoints) of the dialogue tree
+   * Returns branches sorted by their position in the tree (most recent first)
+   */
+  static async getRecentBranches(
+    characterId: string,
+    limit: number = 10,
+  ): Promise<{
+    nodeId: string;
+    title: string;
+    messageCount: number;
+    isCurrent: boolean;
+    preview: string;
+  }[]> {
+    const dialogueTree = await this.getDialogueTreeById(characterId);
+
+    if (!dialogueTree || !dialogueTree.nodes || dialogueTree.nodes.length === 0) {
+      return [];
+    }
+
+    // Find all leaf nodes (nodes that have no children)
+    const nodeIds = new Set(dialogueTree.nodes.map(n => n.nodeId));
+    const parentIds = new Set(dialogueTree.nodes.map(n => n.parentNodeId));
+
+    const leafNodes = dialogueTree.nodes.filter(node => {
+      // A leaf node is one that is not a parent of any other node
+      const hasChildren = dialogueTree.nodes.some(n => n.parentNodeId === node.nodeId);
+      return !hasChildren && node.nodeId !== "root";
+    });
+
+    // Build branch info for each leaf
+    const branches = await Promise.all(
+      leafNodes.map(async (leaf) => {
+        const path = await this.getDialoguePathToNode(characterId, leaf.nodeId);
+
+        // Get title from the first meaningful node (skip root)
+        const firstMeaningfulNode = path.find(n => n.nodeId !== "root" && n.parentNodeId === "root");
+        let title = "";
+
+        if (firstMeaningfulNode?.parsedContent?.compressedContent) {
+          title = firstMeaningfulNode.parsedContent.compressedContent;
+        } else if (firstMeaningfulNode?.assistantResponse) {
+          title = firstMeaningfulNode.assistantResponse.substring(0, 50);
+        } else {
+          title = `Branch ${leaf.nodeId.substring(0, 8)}`;
+        }
+
+        // Get preview from the last node
+        let preview = "";
+        if (leaf.parsedContent?.compressedContent) {
+          preview = leaf.parsedContent.compressedContent;
+        } else if (leaf.assistantResponse) {
+          preview = leaf.assistantResponse.substring(0, 80);
+        }
+
+        return {
+          nodeId: leaf.nodeId,
+          title: title.length > 50 ? title.substring(0, 50) + "..." : title,
+          messageCount: path.length - 1, // Exclude root
+          isCurrent: leaf.nodeId === dialogueTree.current_nodeId,
+          preview: preview.length > 80 ? preview.substring(0, 80) + "..." : preview,
+        };
+      }),
+    );
+
+    // Sort: current branch first, then by message count (more messages = more developed = more recent activity)
+    branches.sort((a, b) => {
+      if (a.isCurrent && !b.isCurrent) return -1;
+      if (!a.isCurrent && b.isCurrent) return 1;
+      return b.messageCount - a.messageCount;
+    });
+
+    return branches.slice(0, limit);
   }
 }
