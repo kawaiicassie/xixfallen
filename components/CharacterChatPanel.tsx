@@ -24,8 +24,10 @@ import { useEffect, useRef, useState } from "react";
 import ChatHtmlBubble from "@/components/ChatHtmlBubble";
 import ThinkBubble from "@/components/ThinkBubble";
 import { CharacterAvatarBackground } from "@/components/CharacterAvatarBackground";
-import UserNameSettingModal from "@/components/UserNameSettingModal";
-import { getDisplayUsername, setDisplayUsername } from "@/utils/username-helper";
+import PersonalSelectorModal from "@/components/PersonalSelectorModal";
+import { getDisplayUsername } from "@/utils/username-helper";
+import { getPersonalForCharacter } from "@/lib/data/roleplay/personal-operation";
+import { Personal } from "@/lib/models/personal-model";
 import { trackButtonClick, trackFormSubmit } from "@/utils/google-analytics";
 
 /**
@@ -105,11 +107,12 @@ export default function CharacterChatPanel({
 }: Props) {
   const [streamingTarget, setStreamingTarget] = useState<number>(-1);
   const scrollRef = useRef<HTMLDivElement>(null);
-  
-  // Username setting states
-  const [showUserNameModal, setShowUserNameModal] = useState(false);
+
+  // Personal selector states
+  const [showPersonalModal, setShowPersonalModal] = useState(false);
+  const [currentPersonal, setCurrentPersonal] = useState<Personal | null>(null);
   const [currentDisplayName, setCurrentDisplayName] = useState("");
-  
+
   // Toggle buttons expansion state
   const [isButtonsExpanded, setIsButtonsExpanded] = useState(false);
   // Control panel expansion state
@@ -149,9 +152,40 @@ export default function CharacterChatPanel({
       localStorage.setItem("streamingEnabled", "true");
     }
 
-    // Load display username using helper function
-    setCurrentDisplayName(getDisplayUsername());
+    // Load personal for this character
+    loadCurrentPersonal();
   }, []);
+
+  // Load current personal for this character
+  const loadCurrentPersonal = async () => {
+    if (character?.id) {
+      try {
+        const personal = await getPersonalForCharacter(character.id);
+        setCurrentPersonal(personal);
+        // Use personal name as display name, fallback to username helper
+        if (personal?.name) {
+          setCurrentDisplayName(personal.name);
+        } else {
+          setCurrentDisplayName(getDisplayUsername());
+        }
+      } catch (error) {
+        console.error("Failed to load personal:", error);
+        setCurrentDisplayName(getDisplayUsername());
+      }
+    } else {
+      setCurrentDisplayName(getDisplayUsername());
+    }
+  };
+
+  // Handle personal change from modal
+  const handlePersonalChange = (personal: Personal | null) => {
+    setCurrentPersonal(personal);
+    if (personal?.name) {
+      setCurrentDisplayName(personal.name);
+    } else {
+      setCurrentDisplayName(getDisplayUsername());
+    }
+  };
 
   const scrollToBottom = () => {
     const el = scrollRef.current;
@@ -176,13 +210,6 @@ export default function CharacterChatPanel({
     if (index !== messages.length - 1) return false;
 
     return true;
-  };
-
-  // Username setting helper functions
-  const handleUserNameSave = (newDisplayName: string) => {
-    setCurrentDisplayName(newDisplayName);
-    // Use helper function to set username, which also triggers the event
-    setDisplayUsername(newDisplayName);
   };
 
   // API configuration helper functions
@@ -1457,12 +1484,12 @@ export default function CharacterChatPanel({
                     </span>
                   </button>
 
-                  {/* 用户名称 */}
+                  {/* 人设选择 */}
                   <button
                     type="button"
                     onClick={() => {
-                      trackButtonClick("page", "设置用户名称");
-                      setShowUserNameModal(true);
+                      trackButtonClick("page", "选择人设");
+                      setShowPersonalModal(true);
                     }}
                     className={"px-1.5 sm:px-2 md:px-4 py-1.5 text-xs rounded-full border transition-all duration-300 whitespace-nowrap min-w-fit bg-[#2a261f] text-[#f9c86d] border-[#534741] hover:border-[#f9c86d] shadow-sm hover:shadow-md"}
                   >
@@ -1483,7 +1510,7 @@ export default function CharacterChatPanel({
                         <circle cx="12" cy="7" r="4"></circle>
                       </svg>
                       <span className="text-[10px] sm:text-xs">
-                        {t("characterChat.userNameSetting")}
+                        {t("characterChat.personalSetting")}
                       </span>
                     </span>
                   </button>
@@ -1521,7 +1548,7 @@ export default function CharacterChatPanel({
                     <path d="M18 15l-6-6-6 6"></path>
                   </svg>
                   <span className="text-[10px] sm:text-xs">
-                    {isControlPanelExpanded ? "收起控制" : "展开控制"}
+                    {isControlPanelExpanded ? t("characterChat.collapseControl") : t("characterChat.expandControl")}
                   </span>
                 </span>
               </button>
@@ -1530,12 +1557,12 @@ export default function CharacterChatPanel({
         </form>
       </div>
 
-      {/* Username Setting Modal */}
-      <UserNameSettingModal
-        isOpen={showUserNameModal}
-        onClose={() => setShowUserNameModal(false)}
-        currentDisplayName={currentDisplayName}
-        onSave={handleUserNameSave}
+      {/* Personal Selector Modal */}
+      <PersonalSelectorModal
+        isOpen={showPersonalModal}
+        onClose={() => setShowPersonalModal(false)}
+        characterId={character?.id || ""}
+        onPersonalChange={handlePersonalChange}
       />
     </div>
   );

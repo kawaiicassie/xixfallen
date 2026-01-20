@@ -228,6 +228,15 @@
     "descriptionPlaceholder": "Describe your persona...",
     "personalityPlaceholder": "Define personality traits..."
   },
+  "personalSelector": {
+    "title": "Select Personal",
+    "description": "Choose a personal to use with this character",
+    "useDefault": "Use Default Personal",
+    "currentDefault": "Current default",
+    "selectSpecific": "Or select a specific personal:",
+    "currentPersonal": "Currently using",
+    "helperText": "The selected personal will be used when chatting with this character"
+  },
   "storiesPage": {
     "title": "My Story Collection",
     "createNewStory": "Create New Story",
@@ -458,7 +467,11 @@
     "requestFailed": "Request Failed",
     "checkNetworkOrAPI": "Please check your network connection or API configuration",
     "userNameSetting": "Username",
-    "openUserNameSetting": "Set Username"
+    "openUserNameSetting": "Set Username",
+    "collapseControl": "Collapse",
+    "expandControl": "Expand",
+    "personalSetting": "Personal",
+    "openPersonalSetting": "Select Personal"
   },
   "presetInfo": {
     "modalTitle": "Preset Details",

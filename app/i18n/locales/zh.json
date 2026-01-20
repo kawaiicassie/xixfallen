@@ -228,6 +228,15 @@
     "descriptionPlaceholder": "描述您的人设...",
     "personalityPlaceholder": "定义性格特征..."
   },
+  "personalSelector": {
+    "title": "选择人设",
+    "description": "选择与此角色聊天时使用的人设",
+    "useDefault": "使用默认人设",
+    "currentDefault": "当前默认",
+    "selectSpecific": "或选择特定人设：",
+    "currentPersonal": "当前使用",
+    "helperText": "选定的人设将在与此角色聊天时使用"
+  },
   "storiesPage": {
     "title": "我的故事",
     "createNewStory": "创建新故事",
@@ -460,7 +469,11 @@
     "requestFailed": "请求失败",
     "checkNetworkOrAPI": "请检查网络连接或API配置",
     "userNameSetting": "用户名称",
-    "openUserNameSetting": "设置用户名称"
+    "openUserNameSetting": "设置用户名称",
+    "collapseControl": "收起控制",
+    "expandControl": "展开控制",
+    "personalSetting": "人设",
+    "openPersonalSetting": "选择人设"
   },
   "presetInfo": {
     "modalTitle": "预设详细信息",
