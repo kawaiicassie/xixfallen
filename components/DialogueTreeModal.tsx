@@ -972,6 +972,9 @@ export default function DialogueTreeModal({ isOpen, onClose, characterId, onDial
         await onDialogueEdit();
       }
 
+      // Dispatch event to notify other components (e.g., SidebarRecentChats)
+      window.dispatchEvent(new CustomEvent("dialogue-changed"));
+
       // Update current path colors
       await updateCurrentPathColors(characterId);
 

@@ -113,6 +113,14 @@ function convertMarkdown(str: string): string {
     str = str.replace(`__IMAGE_PLACEHOLDER_${i}__`, html);
   });
 
+  // Convert paragraph breaks (double newlines) to <br><br> tags
+  // This preserves the visual paragraph separation in the rendered output
+  // Handle newlines between closing and opening tags: </em>\n\n<em> -> </em><br><br><em>
+  str = str.replace(/(\s*\n\s*){2,}/g, "<br><br>");
+  // Convert single newlines to <br> tags
+  // Handle: text\ntext, </tag>\ntext, text\n<tag>
+  str = str.replace(/\n/g, "<br>");
+
   return str;
 }
 
@@ -369,8 +377,6 @@ function replaceTags(html: string) {
   const { getColorForHtmlTag } = useSymbolColorStore.getState();
 
   function processHtml(htmlStr: string): string {
-    htmlStr = htmlStr.replace(/>\s*\n\s*</g, "><");
-    
     const tagRegex = /<([a-zA-Z][a-zA-Z0-9]*)\b([^>]*)>([\s\S]*?)<\/\1>/g;
     
     return htmlStr.replace(tagRegex, (match, tagName: string, attributes: string, innerContent: string) => {

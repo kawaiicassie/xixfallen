@@ -114,6 +114,20 @@ const SidebarRecentChats: React.FC<SidebarRecentChatsProps> = ({ isOpen }) => {
     }
   }, [isOpen, fetchData]);
 
+  // Listen for dialogue changes (node deletion, etc.)
+  useEffect(() => {
+    const handleDialogueChange = () => {
+      if (isOpen) {
+        fetchData();
+      }
+    };
+
+    window.addEventListener("dialogue-changed", handleDialogueChange);
+    return () => {
+      window.removeEventListener("dialogue-changed", handleDialogueChange);
+    };
+  }, [isOpen, fetchData]);
+
   const toggleCharacter = (characterId: string) => {
     setExpandedCharacters(prev => {
       const newSet = new Set(prev);

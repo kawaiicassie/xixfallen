@@ -540,6 +540,9 @@ export default function CharacterPage() {
         if (result.parsedContent?.nextPrompts) {
           setSuggestedInputs(result.parsedContent.nextPrompts);
         }
+
+        // Notify other components about dialogue change
+        window.dispatchEvent(new CustomEvent("dialogue-changed"));
       } else {
         showErrorToast(result.message || t("characterChat.checkNetworkOrAPI"));
       }
