@@ -1,6 +1,6 @@
 /**
- * Main layout component for the Narratium application
- * 
+ * Main layout component for the Meowern application
+ *
  * This component provides the core layout structure including:
  * - Responsive sidebar navigation
  * - Model settings sidebar

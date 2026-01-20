@@ -1109,6 +1109,32 @@ export default function CharacterChatPanel({
                       <div className="flex items-center">
                         <button
                           onClick={() => {
+                            trackButtonClick("page", "复制消息");
+                            navigator.clipboard.writeText(message.content.replace(/<[^>]*>/g, ""));
+                          }}
+                          className="ml-1 w-6 h-6 flex items-center justify-center text-[#a18d6f] hover:text-blue-400 bg-[#1c1c1c] rounded-lg border border-[#333333] shadow-inner transition-all duration-300 hover:border-[#444444] hover:shadow-[0_0_8px_rgba(59,130,246,0.4)] group relative"
+                          data-tooltip={t("characterChat.copyMessage")}
+                        >
+                          <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-[#2a261f] text-[#f4e8c1] text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap border border-[#534741]">
+                            {t("characterChat.copyMessage")}
+                          </div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="12"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                          </svg>
+                        </button>
+                        <button
+                          onClick={() => {
                             trackButtonClick("page", "跳转到此消息");
                             onTruncate(message.id);
                           }}

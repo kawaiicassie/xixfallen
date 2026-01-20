@@ -92,18 +92,18 @@ export default function HomeContent() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="text-center max-w-2xl px-4 relative z-20"
       >
-        <h1 className="text-5xl font-cinzel mb-6 bg-clip-text text-transparent bg-gradient-to-r from-amber-500 via-orange-400 to-yellow-300 drop-shadow-[0_0_10px_rgba(251,146,60,0.5)]">
-        Narratium
+        <h1 className="text-5xl font-cinzel mb-6 bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-pink-300 to-rose-300 drop-shadow-[0_0_10px_rgba(244,114,182,0.5)]">
+        Meowern
         </h1>
         <p
           className={`text-xl mb-12 tracking-wide ${serifFontClass}`}
           style={{
-            background: "linear-gradient(to right, #82652EFF, #DCAA22FF, #D80909FF)",
+            background: "linear-gradient(to right, #ec4899, #f472b6, #fb7185)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
             color: "transparent",
-            textShadow: "0 0 2px rgba(209, 163, 92, 0.3)",
+            textShadow: "0 0 2px rgba(244, 114, 182, 0.3)",
           }}
         >
           {t("homePage.slogan")}
@@ -112,7 +112,7 @@ export default function HomeContent() {
         <div className="flex flex-col md:flex-row gap-4 justify-center mt-6">
           <Link href="/character-cards">
             <motion.div
-              className={`portal-button text-[#c0a480] hover:text-[#ffd475] text-sm px-6 py-2 border border-[#534741] rounded-md cursor-pointer ${fontClass} tracking-wide shadow-inner`}
+              className={`portal-button text-[#f9a8d4] hover:text-[#fce7f3] text-sm px-6 py-2 border border-[#534741] rounded-md cursor-pointer ${fontClass} tracking-wide shadow-inner`}
               whileHover={{ scale: 1.03, backgroundColor: "rgba(40, 35, 30, 0.6)" }}
               transition={{ type: "spring", stiffness: 400, damping: 15 }}
             >
