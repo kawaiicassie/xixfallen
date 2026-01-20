@@ -75,6 +75,7 @@ interface Props {
   onSuggestedInput: (input: string) => void;
   onTruncate: (id: string) => void;
   onRegenerate: (id: string) => void;
+  onStopGeneration?: () => void;
   fontClass: string;
   serifFontClass: string;
   t: (key: string) => string;
@@ -99,6 +100,7 @@ export default function CharacterChatPanel({
   onSuggestedInput,
   onTruncate,
   onRegenerate,
+  onStopGeneration,
   fontClass,
   serifFontClass,
   t,
@@ -720,7 +722,7 @@ export default function CharacterChatPanel({
 
                 return message.role === "user" ? (
                   <div key={index} className="flex justify-end mb-4">
-                    <div className="max-w-md lg:max-w-2xl break-words whitespace-pre-line text-[#f4e8c1] story-text leading-relaxed magical-text">
+                    <div className="max-w-md lg:max-w-2xl break-words text-[#f4e8c1] story-text leading-relaxed magical-text">
                       <p
                         className={`${serifFontClass}`}
                         dangerouslySetInnerHTML={{
@@ -731,7 +733,7 @@ export default function CharacterChatPanel({
                           ).replace(
                             /^[\s\n\r]*((<[^>]+>\s*)*)?(玩家输入指令|Player Input)[:：]\s*/i,
                             "",
-                          ),
+                          ).replace(/\n/g, "<br>"),
                         }}
                       ></p>
                     </div>
@@ -1376,38 +1378,23 @@ export default function CharacterChatPanel({
             </div>
             <div className="flex gap-1 sm:gap-2 items-center flex-shrink-0">
               {isSending ? (
-                <div className="relative w-8 h-8 flex items-center justify-center">
-                  <div className="absolute inset-0 rounded-full border-2 border-t-[#f472b6] border-r-[#f9a8d4] border-b-[#a18d6f] border-l-transparent animate-spin"></div>
-                  <div className="absolute inset-1 rounded-full border-2 border-t-[#a18d6f] border-r-[#f472b6] border-b-[#f9a8d4] border-l-transparent animate-spin-slow"></div>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (onStopGeneration) {
+                      onStopGeneration();
+                    }
+                  }}
+                  className="portal-button relative overflow-hidden bg-[#2a261f] hover:bg-[#3d2828] text-red-400 hover:text-red-300 py-2 px-3 sm:px-4 rounded-lg text-sm border border-red-700/50 hover:border-red-500 shadow-md transition-all duration-300 flex items-center gap-2"
+                  title={t("characterChat.stopGeneration") || "Stop"}
+                >
+                  <div className="relative w-4 h-4">
+                    <div className="absolute inset-0 rounded-full border-2 border-t-red-400 border-r-red-300 border-b-red-200 border-l-transparent animate-spin"></div>
+                  </div>
+                  <span className="hidden sm:inline">{t("characterChat.stop") || "Stop"}</span>
+                </button>
               ) : (
                 <>
-                  {/* Nút Enter cho mobile */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const textarea = document.querySelector("[data-tour='chat-input']") as HTMLTextAreaElement;
-                      if (textarea) {
-                        const start = textarea.selectionStart;
-                        const end = textarea.selectionEnd;
-                        const newValue = userInput.substring(0, start) + "\n" + userInput.substring(end);
-                        setUserInput(newValue);
-                        setTimeout(() => {
-                          textarea.selectionStart = textarea.selectionEnd = start + 1;
-                          textarea.style.height = "auto";
-                          textarea.style.height = Math.min(textarea.scrollHeight, 150) + "px";
-                          textarea.focus();
-                        }, 0);
-                      }
-                    }}
-                    className="md:hidden portal-button relative overflow-hidden bg-[#2a261f] hover:bg-[#342f25] text-[#f9a8d4] hover:text-[#f4e8c1] p-2 rounded-lg text-sm border border-[#534741] hover:border-[#a18d6f] shadow-md transition-all duration-300"
-                    title={t("characterChat.newLine") || "New line"}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M9 10l-5 5 5 5" />
-                      <path d="M20 4v7a4 4 0 0 1-4 4H4" />
-                    </svg>
-                  </button>
                   <button
                     type="submit"
                     disabled={!userInput.trim()}

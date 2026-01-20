@@ -20,6 +20,49 @@
 let pluginContext = null;
 let isEnabled = false;
 
+// i18n translations
+const translations = {
+  zh: {
+    message: "消息",
+    responseTime: "响应时间",
+    totalChars: "总字数",
+    token: "Token",
+    input: "输入",
+    output: "输出",
+    cumulativeTokens: "累计Token",
+  },
+  en: {
+    message: "Message",
+    responseTime: "Response time",
+    totalChars: "Total chars",
+    token: "Token",
+    input: "Input",
+    output: "Output",
+    cumulativeTokens: "Total tokens",
+  },
+};
+
+// Get current language from document or localStorage
+function getCurrentLanguage() {
+  if (typeof window !== "undefined") {
+    const storedLang = localStorage.getItem("language");
+    if (storedLang === "en" || storedLang === "zh") {
+      return storedLang;
+    }
+    const htmlLang = document.documentElement.lang;
+    if (htmlLang && htmlLang.startsWith("en")) {
+      return "en";
+    }
+  }
+  return "zh";
+}
+
+// Get translation for a key
+function t(key) {
+  const lang = getCurrentLanguage();
+  return translations[lang]?.[key] || translations.en[key] || key;
+}
+
 // Message statistics tracking
 let messageStats = {
   startTime: null,
@@ -93,10 +136,10 @@ function insertStatsText(stats) {
     // Create simplified stats content
     const { tokenUsage, totalCharCount } = stats;
     statsText.innerHTML = `
-      📊 消息 #${stats.messageNumber} | 响应时间: ${formatTime(stats.responseTime)} | 
-      总字数: ${formatNumber(totalCharCount)} | 
-      Token: ${formatNumber(tokenUsage.total_tokens)} (输入: ${formatNumber(tokenUsage.prompt_tokens)}, 输出: ${formatNumber(tokenUsage.completion_tokens)}) | 
-      累计Token: ${formatNumber(stats.totalTokens)}
+      📊 ${t("message")} #${stats.messageNumber} | ${t("responseTime")}: ${formatTime(stats.responseTime)} |
+      ${t("totalChars")}: ${formatNumber(totalCharCount)} |
+      ${t("token")}: ${formatNumber(tokenUsage.total_tokens)} (${t("input")}: ${formatNumber(tokenUsage.prompt_tokens)}, ${t("output")}: ${formatNumber(tokenUsage.completion_tokens)}) |
+      ${t("cumulativeTokens")}: ${formatNumber(stats.totalTokens)}
     `;
     
     // Insert after button container
@@ -307,9 +350,9 @@ module.exports = {
   // Plugin info
   pluginInfo: {
     id: "dialogue-stats",
-    name: "对话统计 (Dialogue Statistics)",
-    version: "2.0.0",
-    description: "专注于对话内容统计分析，提供实时的字数、Token用量、响应时间等统计信息",
+    name: "Dialogue Statistics",
+    version: "2.1.0",
+    description: "Real-time dialogue analytics plugin. Displays character count, token usage, and response time metrics.",
     author: "Narratium Team",
   },
 }; 

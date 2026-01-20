@@ -55,6 +55,7 @@ import { switchDialogueBranch } from "@/function/dialogue/truncate";
 import { getCharacterDialogue } from "@/function/dialogue/info";
 import { getIncrementalDialogue } from "@/function/dialogue/incremental-info";
 import { editDialaogueNodeContent } from "@/function/dialogue/edit";
+import { deleteDialogueNode } from "@/function/dialogue/delete";
 
 /**
  * Props interface for the DialogueTreeModal component
@@ -104,6 +105,7 @@ interface DialogueNode extends Node {
     parsedContent: any;
     onEditClick: (id: string) => void;
     onJumpClick: (id: string) => void;
+    onDeleteClick: (id: string) => void;
     isCurrentPath: boolean;
     characterId: string;
   };
@@ -127,7 +129,9 @@ function DialogueNodeComponent({ id, data }: NodeProps<DialogueNode["data"]>) {
   const { t, fontClass, serifFontClass } = useLanguage();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isJumping, setIsJumping] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [showRootTooltip, setShowRootTooltip] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   
   const steps = data.label
     .split(/——>|-->|->|→/)
@@ -153,14 +157,43 @@ function DialogueNodeComponent({ id, data }: NodeProps<DialogueNode["data"]>) {
       }, 3000);
       return;
     }
-    
+
     if (isJumping) return;
-    
+
     try {
       setIsJumping(true);
       await data.onJumpClick(id);
     } finally {
       setIsJumping(false);
+    }
+  };
+
+  const handleDeleteClick = async (event: React.MouseEvent) => {
+    event.stopPropagation();
+
+    if (id === "root") {
+      setShowRootTooltip(true);
+      setTimeout(() => {
+        setShowRootTooltip(false);
+      }, 3000);
+      return;
+    }
+
+    if (isDeleting) return;
+
+    // Show confirmation first
+    setShowDeleteConfirm(true);
+  };
+
+  const confirmDelete = async () => {
+    if (isDeleting) return;
+
+    try {
+      setIsDeleting(true);
+      setShowDeleteConfirm(false);
+      await data.onDeleteClick(id);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -201,7 +234,22 @@ function DialogueNodeComponent({ id, data }: NodeProps<DialogueNode["data"]>) {
           </div>
         </div>
       )}
-      <div className="absolute top-2 right-2 z-10">
+      <div className="absolute top-2 right-2 z-10 flex gap-1">
+        <button
+          onClick={(e) => {trackButtonClick("DialogueTreeModal", "删除节点");handleDeleteClick(e);}}
+          className={`${jumpButtonColor} transition-colors duration-300 p-1 rounded-full hover:bg-[#2a2825] focus:outline-none hover:text-red-400`}
+          title={t("dialogue.deleteNode") || "Delete node"}
+          disabled={isDeleting || id === "root"}
+        >
+          {isDeleting ? (
+            <div className="w-4 h-4 rounded-full border-2 border-t-transparent border-red-400 animate-spin"></div>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+          )}
+        </button>
         <button
           onClick={(e) => {trackButtonClick("DialogueTreeModal", "跳转到节点");handleJumpClick(e);}}
           className={`${jumpButtonColor} transition-colors duration-300 p-1 rounded-full hover:bg-[#2a2825] focus:outline-none`}
@@ -218,6 +266,26 @@ function DialogueNodeComponent({ id, data }: NodeProps<DialogueNode["data"]>) {
           )}
         </button>
       </div>
+      {/* Delete Confirmation */}
+      {showDeleteConfirm && (
+        <div className="absolute -top-16 right-0 z-20 bg-[#1c1c1c] border border-red-700 rounded-md p-2 shadow-lg animate-fade-in">
+          <p className={`text-xs text-red-400 mb-2 ${fontClass}`}>{t("dialogue.confirmDelete") || "Delete this node?"}</p>
+          <div className="flex gap-2 justify-end">
+            <button
+              onClick={(e) => { e.stopPropagation(); setShowDeleteConfirm(false); }}
+              className="text-xs px-2 py-1 text-[#a18d6f] hover:text-[#f4e8c1] transition-colors"
+            >
+              {t("common.cancel") || "Cancel"}
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); confirmDelete(); }}
+              className="text-xs px-2 py-1 bg-red-600/20 text-red-400 hover:bg-red-600/40 rounded transition-colors"
+            >
+              {t("common.delete") || "Delete"}
+            </button>
+          </div>
+        </div>
+      )}
       <Handle 
         type="target" 
         position={Position.Top} 
@@ -846,6 +914,74 @@ export default function DialogueTreeModal({ isOpen, onClose, characterId, onDial
     }
   }, [characterId, onDialogueEdit, isJumpingToNode]);
 
+  const handleDeleteNode = useCallback(async (nodeId: string) => {
+    if (!characterId || nodeId === "root") return;
+
+    try {
+      const response = await deleteDialogueNode({ characterId, nodeId });
+
+      if (!response.success) {
+        throw new Error("Failed to delete node");
+      }
+
+      // Remove node from local state
+      const deletedNodeIdSet = new Set([nodeId]);
+
+      // Also remove all child nodes recursively
+      const findChildNodes = (parentId: string): string[] => {
+        const children: string[] = [];
+        nodesRef.current.forEach(node => {
+          const edge = edges.find(e => e.source === parentId && e.target === node.id);
+          if (edge) {
+            children.push(node.id);
+            children.push(...findChildNodes(node.id));
+          }
+        });
+        return children;
+      };
+
+      const childNodes = findChildNodes(nodeId);
+      childNodes.forEach(id => deletedNodeIdSet.add(id));
+
+      // Update nodes
+      const filteredNodes = nodesRef.current.filter(node => !deletedNodeIdSet.has(node.id));
+      setNodes(filteredNodes);
+      nodesRef.current = filteredNodes;
+
+      // Update edges
+      const filteredEdges = edges.filter(edge =>
+        !deletedNodeIdSet.has(edge.source) && !deletedNodeIdSet.has(edge.target),
+      );
+      setEdges(filteredEdges);
+
+      // Update tracking
+      setLastKnownNodeIds(prev => {
+        const updated = new Set(prev);
+        deletedNodeIdSet.forEach(id => updated.delete(id));
+        return updated;
+      });
+
+      // Remove from user adjusted positions
+      setUserAdjustedPositions(prev => {
+        const updated = { ...prev };
+        deletedNodeIdSet.forEach(id => delete updated[id]);
+        return updated;
+      });
+
+      if (onDialogueEdit) {
+        await onDialogueEdit();
+      }
+
+      // Update current path colors
+      await updateCurrentPathColors(characterId);
+
+      return true;
+    } catch (error) {
+      console.error("Error deleting node:", error);
+      return false;
+    }
+  }, [characterId, edges, onDialogueEdit, updateCurrentPathColors]);
+
   useEffect(() => {
     nodesRef.current = nodes;
   }, [nodes]);
@@ -1052,6 +1188,7 @@ export default function DialogueTreeModal({ isOpen, onClose, characterId, onDial
             parsedContent: node.parsedContent || {},
             onEditClick: (id: string) => handleEditNode(id),
             onJumpClick: (id: string) => handleJumpToNode(id),
+            onDeleteClick: (id: string) => handleDeleteNode(id),
             isCurrentPath: isCurrentPath,
             characterId: characterId,
           },
@@ -1286,6 +1423,7 @@ export default function DialogueTreeModal({ isOpen, onClose, characterId, onDial
             parsedContent: node.parsedContent || {},
             onEditClick: (id: string) => handleEditNode(id),
             onJumpClick: (id: string) => handleJumpToNode(id),
+            onDeleteClick: (id: string) => handleDeleteNode(id),
             isCurrentPath: isCurrentPath,
             characterId: characterId,
           },

@@ -107,35 +107,53 @@ export const FontSettingsEditor: React.FC<FontSettingsEditorProps> = ({ onViewSw
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col gap-3">
           {/* Font Selector */}
           <div className="flex-1 relative" ref={isOpen ? dropdownRef : undefined}>
-            <button
-              onClick={() => setActiveDropdown(isOpen ? null : fontKey)}
-              className="w-full px-3 py-2 bg-gradient-to-br from-[#1a1816] via-[#252220] to-[#1a1816] text-[#eae6db] rounded-lg border border-[#534741]/60 focus:border-amber-500/60 focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition-all duration-300 text-left flex items-center justify-between"
-              style={{ fontFamily: currentFont ? `'${currentFont}', serif` : "inherit" }}
-            >
-              <span className="truncate">
-                {currentFont || (t("fontSettings.defaultFont") || "Default (System)")}
-              </span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="12"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+            <div className="flex gap-3 items-center">
+              <button
+                onClick={() => setActiveDropdown(isOpen ? null : fontKey)}
+                className="flex-1 px-3 py-2 bg-gradient-to-br from-[#1a1816] via-[#252220] to-[#1a1816] text-[#eae6db] rounded-lg border border-[#534741]/60 focus:border-amber-500/60 focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition-all duration-300 text-left flex items-center justify-between"
+                style={{ fontFamily: currentFont ? `'${currentFont}', serif` : "inherit" }}
               >
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </button>
+                <span className="truncate">
+                  {currentFont || (t("fontSettings.defaultFont") || "Default (System)")}
+                </span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+
+              {/* Size Selector - inline with font selector */}
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <label className={`text-xs text-[#a18d6f] whitespace-nowrap ${fontClass}`}>
+                  {t("fontSettings.size") || "Size"}:
+                </label>
+                <input
+                  type="number"
+                  min="10"
+                  max="32"
+                  value={currentSize}
+                  onChange={(e) => updateFontSettings({ [sizeKey]: parseInt(e.target.value) || 16 })}
+                  className="w-16 px-2 py-1.5 bg-[#1a1816] text-[#eae6db] rounded border border-[#534741]/60 focus:border-amber-500/60 focus:outline-none text-sm text-center"
+                />
+                <span className="text-xs text-[#a18d6f]">px</span>
+              </div>
+            </div>
 
             {isOpen && (
-              <div className="mt-2 bg-[#1a1816] border border-[#534741] rounded-lg shadow-xl overflow-hidden">
+              <div className="absolute left-0 right-0 mt-2 bg-[#1a1816] border border-[#534741] rounded-lg shadow-xl overflow-hidden z-50">
                 {/* Category Filter */}
                 <div className="flex gap-1 p-2 border-b border-[#534741]/50 overflow-x-auto fantasy-scrollbar">
                   {(["all", "serif", "sans-serif", "cursive", "monospace", "custom"] as FontCategory[]).map((cat) => (
@@ -194,22 +212,6 @@ export const FontSettingsEditor: React.FC<FontSettingsEditorProps> = ({ onViewSw
                 </div>
               </div>
             )}
-          </div>
-
-          {/* Size Selector */}
-          <div className="flex items-center gap-2">
-            <label className={`text-xs text-[#a18d6f] whitespace-nowrap ${fontClass}`}>
-              {t("fontSettings.size") || "Size"}:
-            </label>
-            <input
-              type="number"
-              min="10"
-              max="32"
-              value={currentSize}
-              onChange={(e) => updateFontSettings({ [sizeKey]: parseInt(e.target.value) || 16 })}
-              className="w-16 px-2 py-1.5 bg-[#1a1816] text-[#eae6db] rounded border border-[#534741]/60 focus:border-amber-500/60 focus:outline-none text-sm text-center"
-            />
-            <span className="text-xs text-[#a18d6f]">px</span>
           </div>
         </div>
 

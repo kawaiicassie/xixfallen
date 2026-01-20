@@ -756,6 +756,7 @@ export default function CharacterPage() {
             onSuggestedInput={handleSuggestedInput}
             onTruncate={truncateMessagesAfter}
             onRegenerate={handleRegenerate}
+            onStopGeneration={() => setIsSending(false)}
             fontClass={fontClass}
             serifFontClass={serifFontClass}
             t={t}
