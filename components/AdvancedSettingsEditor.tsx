@@ -23,6 +23,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useLanguage } from "@/app/i18n";
 import { TagColorEditor } from "@/components/TagColorEditor";
+import { FontSettingsEditor } from "@/components/FontSettingsEditor";
 import "@/app/styles/fantasy-ui.css";
 
 /**
@@ -133,6 +134,23 @@ const AdvancedSettingsEditor: React.FC<AdvancedSettingsEditorProps> = ({ isOpen,
                   <span className="truncate">{t("characterChat.tagColorEditor")}</span>
                 </div>
               </button>
+              <button
+                className={`w-full text-left px-1.5 sm:px-3 py-1.5 sm:py-2.5 rounded-lg transition-all duration-200 ease-in-out text-[10px] sm:text-sm font-medium ${fontClass} ${
+                  activeTab === "fonts"
+                    ? "bg-gradient-to-r from-slate-700/80 via-purple-800/60 to-slate-700/80 text-purple-200 shadow-sm border border-purple-600/30 hover:shadow-lg hover:shadow-purple-500/20"
+                    : "text-neutral-400 hover:bg-neutral-700/40 hover:text-neutral-200"
+                }`}
+                onClick={() => setActiveTab("fonts")}
+              >
+                <div className="flex items-center space-x-1 sm:space-x-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-400">
+                    <polyline points="4 7 4 4 20 4 20 7"></polyline>
+                    <line x1="9" y1="20" x2="15" y2="20"></line>
+                    <line x1="12" y1="4" x2="12" y2="20"></line>
+                  </svg>
+                  <span className="truncate">{t("fontSettings.title") || "Message Fonts"}</span>
+                </div>
+              </button>
             </div>
           </div>
 
@@ -143,6 +161,11 @@ const AdvancedSettingsEditor: React.FC<AdvancedSettingsEditorProps> = ({ isOpen,
                 <TagColorEditor
                   onSave={(colors) => {
                   }}
+                  onViewSwitch={onViewSwitch}
+                />
+              )}
+              {activeTab === "fonts" && (
+                <FontSettingsEditor
                   onViewSwitch={onViewSwitch}
                 />
               )}

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, memo, useState, useCallback, useMemo } from "react";
 import { useSymbolColorStore } from "@/contexts/SymbolColorStore";
+import { useMessageFontStore } from "@/contexts/MessageFontStore";
 import { useLanguage } from "@/app/i18n";
 
 // Virtual queue for rendering optimization
@@ -525,12 +526,74 @@ export default memo(function ChatHtmlBubble({
   );
   const frameRef = useRef<HTMLIFrameElement>(null);
   const { serifFontClass } = useLanguage();
+  const { fontSettings, loadGoogleFont } = useMessageFontStore();
   
   // Virtual queue integration for rendering optimization
   const renderQueueRef = useRef<VirtualRenderQueue>(globalRenderQueue);
   const lastProcessedHtmlRef = useRef<string>("");
   const pendingUpdateRef = useRef<NodeJS.Timeout | null>(null);
   const isUpdatingRef = useRef<boolean>(false);
+
+  // Load fonts on mount or when settings change
+  useEffect(() => {
+    if (fontSettings.normalFont) loadGoogleFont(fontSettings.normalFont);
+    if (fontSettings.dialogueFont) loadGoogleFont(fontSettings.dialogueFont);
+    if (fontSettings.italicFont) loadGoogleFont(fontSettings.italicFont);
+    if (fontSettings.codeFont) loadGoogleFont(fontSettings.codeFont);
+  }, [fontSettings, loadGoogleFont]);
+
+  // Generate Google Fonts import URL for iframe
+  const googleFontsImport = useMemo(() => {
+    const fonts: string[] = [];
+    if (fontSettings.normalFont) fonts.push(fontSettings.normalFont.replace(/\s+/g, "+"));
+    if (fontSettings.dialogueFont) fonts.push(fontSettings.dialogueFont.replace(/\s+/g, "+"));
+    if (fontSettings.italicFont) fonts.push(fontSettings.italicFont.replace(/\s+/g, "+"));
+    if (fontSettings.codeFont) fonts.push(fontSettings.codeFont.replace(/\s+/g, "+"));
+
+    if (fonts.length === 0) return "";
+
+    const uniqueFonts = [...new Set(fonts)];
+    return `@import url('https://fonts.googleapis.com/css2?${uniqueFonts.map(f => `family=${f}:wght@400;500;600;700`).join("&")}&display=swap');`;
+  }, [fontSettings]);
+
+  // Generate dynamic CSS for fonts
+  const fontCSS = useMemo(() => {
+    let css = "";
+
+    // Normal text (body)
+    if (fontSettings.normalFont) {
+      css += `html, body { font-family: '${fontSettings.normalFont}', serif !important; }`;
+    }
+    if (fontSettings.normalFontSize !== 16) {
+      css += `html, body { font-size: ${fontSettings.normalFontSize}px !important; }`;
+    }
+
+    // Dialogue text (text in quotes)
+    if (fontSettings.dialogueFont) {
+      css += `talk, .dialogue { font-family: '${fontSettings.dialogueFont}', serif !important; }`;
+    }
+    if (fontSettings.dialogueFontSize !== 16) {
+      css += `talk, .dialogue { font-size: ${fontSettings.dialogueFontSize}px !important; }`;
+    }
+
+    // Italic/emphasis text
+    if (fontSettings.italicFont) {
+      css += `em, i { font-family: '${fontSettings.italicFont}', serif !important; }`;
+    }
+    if (fontSettings.italicFontSize !== 16) {
+      css += `em, i { font-size: ${fontSettings.italicFontSize}px !important; }`;
+    }
+
+    // Code text
+    if (fontSettings.codeFont) {
+      css += `code, pre { font-family: '${fontSettings.codeFont}', monospace !important; }`;
+    }
+    if (fontSettings.codeFontSize !== 14) {
+      css += `code, pre { font-size: ${fontSettings.codeFontSize}px !important; }`;
+    }
+
+    return css;
+  }, [fontSettings]);
 
   // Memoized HTML processing to prevent unnecessary recalculations
   const processedHtml = useMemo(() => {
@@ -669,7 +732,7 @@ export default memo(function ChatHtmlBubble({
 
   const initialContent = enableStreaming ? "" : processedHtml;
 
-  const srcDoc = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>*,*::before,*::after{box-sizing:border-box;max-width:100%}html,body{margin:0;padding:0;color:#f4e8c1;font:16px/${1.5} serif;background:transparent;word-wrap:break-word;overflow-wrap:break-word;hyphens:auto;white-space:pre-wrap;overflow:hidden;}img,video,iframe{max-width:100%;height:auto;display:block;margin:0 auto}table{width:100%;border-collapse:collapse;overflow-x:auto;display:block}code,pre{font-family:monospace;font-size:0.9rem;white-space:pre-wrap;background:rgba(40,40,40,0.8);padding:4px 8px;border-radius:4px;border:1px solid rgba(255,255,255,0.1);}pre{background:rgba(40,40,40,0.8);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);margin:8px 0;}blockquote{margin:8px 0;padding:8px 12px;border-left:4px solid #93c5fd;background:rgba(147,197,253,0.08);border-radius:0 4px 4px 0;font-style:italic;color:#93c5fd;}strong{color:#fb7185;font-weight:bold;}em{color:#c4b5fd;font-style:italic;}.dialogue{color:#fda4af;}a{color:#93c5fd}.tag-styled{white-space:inherit;}</style></head><body><div id="content-wrapper">${initialContent}</div><script>
+  const srcDoc = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>${googleFontsImport}*,*::before,*::after{box-sizing:border-box;max-width:100%}html,body{margin:0;padding:0;color:#f4e8c1;font:16px/${1.5} serif;background:transparent;word-wrap:break-word;overflow-wrap:break-word;hyphens:auto;white-space:pre-wrap;overflow:hidden;}img,video,iframe{max-width:100%;height:auto;display:block;margin:0 auto}table{width:100%;border-collapse:collapse;overflow-x:auto;display:block}code,pre{font-family:monospace;font-size:0.9rem;white-space:pre-wrap;background:rgba(40,40,40,0.8);padding:4px 8px;border-radius:4px;border:1px solid rgba(255,255,255,0.1);}pre{background:rgba(40,40,40,0.8);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);margin:8px 0;}blockquote{margin:8px 0;padding:8px 12px;border-left:4px solid #93c5fd;background:rgba(147,197,253,0.08);border-radius:0 4px 4px 0;font-style:italic;color:#93c5fd;}strong{color:#fb7185;font-weight:bold;}em{color:#c4b5fd;font-style:italic;}.dialogue{color:#fda4af;}a{color:#93c5fd}.tag-styled{white-space:inherit;}${fontCSS}</style></head><body><div id="content-wrapper">${initialContent}</div><script>
 // Virtual queue integration for performance optimization
 const virtualQueue = {
   tasks: [],

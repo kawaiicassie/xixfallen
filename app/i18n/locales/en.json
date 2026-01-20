@@ -1053,5 +1053,34 @@
     "reset": "Reset",
     "helperText": "This name will replace {{user}} tags in character dialogues",
     "notLoggedIn": "Not logged in"
+  },
+  "fontSettings": {
+    "title": "Message Fonts",
+    "addCustomFont": "Add Custom Font from Google Fonts",
+    "customFontPlaceholder": "Enter font name (e.g., Roboto Slab)",
+    "customFontHelp": "Enter the exact font name from Google Fonts. Supports Unicode and multilingual characters.",
+    "fontAdded": "Font added successfully",
+    "reset": "Settings reset to default",
+    "resetDefault": "Reset to Default",
+    "defaultFont": "Default (System)",
+    "size": "Size",
+    "preview": "The quick brown fox jumps over the lazy dog. 日本語 한국어 Tiếng Việt",
+    "custom": "Custom",
+    "normalText": "Normal Text",
+    "normalTextDesc": "Font for regular message text",
+    "dialogueText": "Dialogue Text",
+    "dialogueTextDesc": "Font for text in quotation marks \" \"",
+    "italicText": "Italic/Emphasis Text",
+    "italicTextDesc": "Font for italic text in * * (actions, thoughts)",
+    "codeText": "Code Text",
+    "codeTextDesc": "Font for code in ` and ``` blocks",
+    "category": {
+      "all": "All",
+      "serif": "Serif",
+      "sans-serif": "Sans-Serif",
+      "cursive": "Cursive",
+      "monospace": "Monospace",
+      "custom": "Custom"
+    }
   }
 }

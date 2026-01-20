@@ -23,6 +23,10 @@ export const PERSONA_SETTINGS_FILE = "persona_settings";
 export const PERSONAL_FILE = PERSONA_FILE;
 export const PERSONAL_SETTINGS_FILE = PERSONA_SETTINGS_FILE;
 
+// LocalStorage keys for Advanced Settings (Zustand persist stores)
+export const SYMBOL_COLORS_KEY = "symbol-colors";
+export const MESSAGE_FONTS_KEY = "message-fonts";
+
 function openDB(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open(DB_NAME, DB_VERSION);
@@ -222,6 +226,33 @@ export async function exportAllData(): Promise<Record<string, any>> {
   
   exportData[CHARACTER_IMAGES_FILE] = imageBlobs;
 
+  // Handle Advanced Settings from localStorage (Zustand persist stores)
+  if (typeof window !== "undefined" && window.localStorage) {
+    const advancedSettings: Record<string, any> = {};
+
+    // Export Symbol Colors
+    const symbolColorsData = localStorage.getItem(SYMBOL_COLORS_KEY);
+    if (symbolColorsData) {
+      try {
+        advancedSettings[SYMBOL_COLORS_KEY] = JSON.parse(symbolColorsData);
+      } catch (e) {
+        console.error("Failed to parse symbol colors:", e);
+      }
+    }
+
+    // Export Message Fonts
+    const messageFontsData = localStorage.getItem(MESSAGE_FONTS_KEY);
+    if (messageFontsData) {
+      try {
+        advancedSettings[MESSAGE_FONTS_KEY] = JSON.parse(messageFontsData);
+      } catch (e) {
+        console.error("Failed to parse message fonts:", e);
+      }
+    }
+
+    exportData["advanced_settings"] = advancedSettings;
+  }
+
   return exportData;
 }
 
@@ -253,6 +284,29 @@ export async function importAllData(data: Record<string, any>): Promise<void> {
       if (typeof item.data === "string") {
         const blob = await base64ToBlob(item.data);
         await setBlob(item.key, blob);
+      }
+    }
+  }
+
+  // Handle Advanced Settings from localStorage (Zustand persist stores)
+  if (typeof window !== "undefined" && window.localStorage && data["advanced_settings"]) {
+    const advancedSettings = data["advanced_settings"];
+
+    // Import Symbol Colors
+    if (advancedSettings[SYMBOL_COLORS_KEY]) {
+      try {
+        localStorage.setItem(SYMBOL_COLORS_KEY, JSON.stringify(advancedSettings[SYMBOL_COLORS_KEY]));
+      } catch (e) {
+        console.error("Failed to import symbol colors:", e);
+      }
+    }
+
+    // Import Message Fonts
+    if (advancedSettings[MESSAGE_FONTS_KEY]) {
+      try {
+        localStorage.setItem(MESSAGE_FONTS_KEY, JSON.stringify(advancedSettings[MESSAGE_FONTS_KEY]));
+      } catch (e) {
+        console.error("Failed to import message fonts:", e);
       }
     }
   }

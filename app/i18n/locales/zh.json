@@ -1057,5 +1057,34 @@
     "reset": "重置",
     "helperText": "此名称将在角色对话中替换 {{user}} 标签显示",
     "notLoggedIn": "未登录"
+  },
+  "fontSettings": {
+    "title": "消息字体",
+    "addCustomFont": "从 Google Fonts 添加自定义字体",
+    "customFontPlaceholder": "输入字体名称（例如：Roboto Slab）",
+    "customFontHelp": "输入 Google Fonts 中的精确字体名称。支持 Unicode 和多语言字符。",
+    "fontAdded": "字体添加成功",
+    "reset": "设置已重置为默认值",
+    "resetDefault": "重置为默认",
+    "defaultFont": "默认（系统）",
+    "size": "大小",
+    "preview": "敏捷的棕色狐狸跳过了懒惰的狗。日本語 한국어 Tiếng Việt",
+    "custom": "自定义",
+    "normalText": "普通文本",
+    "normalTextDesc": "常规消息文本的字体",
+    "dialogueText": "对话文本",
+    "dialogueTextDesc": "引号内 \" \" 文本的字体",
+    "italicText": "斜体/强调文本",
+    "italicTextDesc": "* * 内斜体文本的字体（动作、想法）",
+    "codeText": "代码文本",
+    "codeTextDesc": "` 和 ``` 代码块的字体",
+    "category": {
+      "all": "全部",
+      "serif": "衬线体",
+      "sans-serif": "无衬线体",
+      "cursive": "手写体",
+      "monospace": "等宽字体",
+      "custom": "自定义"
+    }
   }
 }
