@@ -3,33 +3,33 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/app/i18n";
-import { Personal } from "@/lib/models/personal-model";
+import { Persona } from "@/lib/models/persona-model";
 import {
-  getAllPersonals,
-  getDefaultPersonal,
-  getPersonalForCharacter,
-  setPersonalForCharacter,
-} from "@/lib/data/roleplay/personal-operation";
+  getAllPersonas,
+  getDefaultPersona,
+  getPersonaForCharacter,
+  setPersonaForCharacter,
+} from "@/lib/data/roleplay/persona-operation";
 
-interface PersonalSelectorModalProps {
+interface PersonaSelectorModalProps {
   isOpen: boolean;
   onClose: () => void;
   characterId: string;
-  onPersonalChange?: (personal: Personal | null) => void;
+  onPersonaChange?: (persona: Persona | null) => void;
 }
 
-export default function PersonalSelectorModal({
+export default function PersonaSelectorModal({
   isOpen,
   onClose,
   characterId,
-  onPersonalChange,
-}: PersonalSelectorModalProps) {
+  onPersonaChange,
+}: PersonaSelectorModalProps) {
   const { t, fontClass, serifFontClass } = useLanguage();
-  const [personals, setPersonals] = useState<Personal[]>([]);
-  const [selectedPersonalId, setSelectedPersonalId] = useState<string | null>(
+  const [personas, setPersonas] = useState<Persona[]>([]);
+  const [selectedPersonaId, setSelectedPersonaId] = useState<string | null>(
     null,
   );
-  const [currentPersonal, setCurrentPersonal] = useState<Personal | null>(null);
+  const [currentPersona, setCurrentPersona] = useState<Persona | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [useDefault, setUseDefault] = useState(true);
@@ -45,47 +45,47 @@ export default function PersonalSelectorModal({
   const loadData = async () => {
     setIsLoading(true);
     try {
-      const allPersonals = await getAllPersonals();
-      setPersonals(allPersonals);
+      const allPersonas = await getAllPersonas();
+      setPersonas(allPersonas);
 
-      // Get current personal for this character
-      const current = await getPersonalForCharacter(characterId);
-      setCurrentPersonal(current);
+      // Get current persona for this character
+      const current = await getPersonaForCharacter(characterId);
+      setCurrentPersona(current);
 
-      // Check if character has specific personal assigned
-      const defaultPersonal = await getDefaultPersonal();
+      // Check if character has specific persona assigned
+      const defaultPersona = await getDefaultPersona();
 
-      // If current personal is the default and no specific mapping exists, useDefault = true
-      if (current && defaultPersonal && current.id === defaultPersonal.id) {
+      // If current persona is the default and no specific mapping exists, useDefault = true
+      if (current && defaultPersona && current.id === defaultPersona.id) {
         // Need to check if there's a specific mapping for this character
-        const specificPersonal = await getPersonalForCharacter(characterId);
-        // If the specific personal equals default, check localStorage mapping
-        const settings = localStorage.getItem("personal_settings");
+        const specificPersona = await getPersonaForCharacter(characterId);
+        // If the specific persona equals default, check localStorage mapping
+        const settings = localStorage.getItem("persona_settings");
         if (settings) {
           const parsed = JSON.parse(settings);
           if (
-            parsed.characterPersonalMap &&
-            parsed.characterPersonalMap[characterId]
+            parsed.characterPersonaMap &&
+            parsed.characterPersonaMap[characterId]
           ) {
             setUseDefault(false);
-            setSelectedPersonalId(parsed.characterPersonalMap[characterId]);
+            setSelectedPersonaId(parsed.characterPersonaMap[characterId]);
           } else {
             setUseDefault(true);
-            setSelectedPersonalId(defaultPersonal?.id || null);
+            setSelectedPersonaId(defaultPersona?.id || null);
           }
         } else {
           setUseDefault(true);
-          setSelectedPersonalId(defaultPersonal?.id || null);
+          setSelectedPersonaId(defaultPersona?.id || null);
         }
       } else if (current) {
         setUseDefault(false);
-        setSelectedPersonalId(current.id);
-      } else if (defaultPersonal) {
+        setSelectedPersonaId(current.id);
+      } else if (defaultPersona) {
         setUseDefault(true);
-        setSelectedPersonalId(defaultPersonal.id);
+        setSelectedPersonaId(defaultPersona.id);
       }
     } catch (error) {
-      console.error("Failed to load personals:", error);
+      console.error("Failed to load personas:", error);
     } finally {
       setIsLoading(false);
     }
@@ -123,20 +123,20 @@ export default function PersonalSelectorModal({
     try {
       if (useDefault) {
         // Remove character-specific mapping, use default
-        await setPersonalForCharacter(characterId, null);
-        const defaultPersonal = await getDefaultPersonal();
-        onPersonalChange?.(defaultPersonal);
-      } else if (selectedPersonalId) {
-        // Set specific personal for this character
-        await setPersonalForCharacter(characterId, selectedPersonalId);
-        const selectedPersonal = personals.find(
-          (p) => p.id === selectedPersonalId,
+        await setPersonaForCharacter(characterId, null);
+        const defaultPersona = await getDefaultPersona();
+        onPersonaChange?.(defaultPersona);
+      } else if (selectedPersonaId) {
+        // Set specific persona for this character
+        await setPersonaForCharacter(characterId, selectedPersonaId);
+        const selectedPersona = personas.find(
+          (p) => p.id === selectedPersonaId,
         );
-        onPersonalChange?.(selectedPersonal || null);
+        onPersonaChange?.(selectedPersona || null);
       }
       onClose();
     } catch (error) {
-      console.error("Failed to save personal:", error);
+      console.error("Failed to save persona:", error);
     } finally {
       setIsSaving(false);
     }
@@ -146,17 +146,17 @@ export default function PersonalSelectorModal({
     if (!useDefault) {
       // Switching to use default
       setUseDefault(true);
-      const defaultPersonal = await getDefaultPersonal();
-      setSelectedPersonalId(defaultPersonal?.id || null);
+      const defaultPersona = await getDefaultPersona();
+      setSelectedPersonaId(defaultPersona?.id || null);
     } else {
-      // Switching to specific personal
+      // Switching to specific persona
       setUseDefault(false);
     }
   };
 
-  const getDefaultPersonalInfo = () => {
-    const defaultPersonal = personals.find((p) => p.isDefault);
-    return defaultPersonal;
+  const getDefaultPersonaInfo = () => {
+    const defaultPersona = personas.find((p) => p.isDefault);
+    return defaultPersona;
   };
 
   return (
@@ -203,10 +203,10 @@ export default function PersonalSelectorModal({
               <h1
                 className={`text-xl sm:text-2xl font-bold text-[#f9c86d] mb-2 ${serifFontClass}`}
               >
-                {t("personalSelector.title")}
+                {t("personaSelector.title")}
               </h1>
               <p className={`text-sm text-[#a18d6f] ${fontClass}`}>
-                {t("personalSelector.description")}
+                {t("personaSelector.description")}
               </p>
             </div>
 
@@ -250,60 +250,60 @@ export default function PersonalSelectorModal({
                       <div
                         className={`text-sm font-medium ${useDefault ? "text-amber-300" : "text-[#c0a480]"} ${fontClass}`}
                       >
-                        {t("personalSelector.useDefault")}
+                        {t("personaSelector.useDefault")}
                       </div>
-                      {getDefaultPersonalInfo() && (
+                      {getDefaultPersonaInfo() && (
                         <div className="text-xs text-[#8a8a8a] mt-1">
-                          {t("personalSelector.currentDefault")}:{" "}
-                          {getDefaultPersonalInfo()?.name}
+                          {t("personaSelector.currentDefault")}:{" "}
+                          {getDefaultPersonaInfo()?.name}
                         </div>
                       )}
                     </div>
                   </div>
                 </div>
 
-                {/* Personal List */}
+                {/* Persona List */}
                 {!useDefault && (
                   <div className="space-y-2 max-h-48 overflow-y-auto">
                     <div
                       className={`text-xs text-[#a18d6f] mb-2 ${fontClass}`}
                     >
-                      {t("personalSelector.selectSpecific")}
+                      {t("personaSelector.selectSpecific")}
                     </div>
-                    {personals.map((personal) => (
+                    {personas.map((persona) => (
                       <div
-                        key={personal.id}
+                        key={persona.id}
                         className={`p-3 rounded-lg border cursor-pointer transition-all ${
-                          selectedPersonalId === personal.id
+                          selectedPersonaId === persona.id
                             ? "bg-purple-500/20 border-purple-500/40"
                             : "bg-[#2a261f]/50 border-[#534741]/50 hover:border-[#534741]"
                         }`}
-                        onClick={() => setSelectedPersonalId(personal.id)}
+                        onClick={() => setSelectedPersonaId(persona.id)}
                       >
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-xs font-bold text-white">
-                            {personal.name.charAt(0).toUpperCase()}
+                            {persona.name.charAt(0).toUpperCase()}
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
                               <span
                                 className={`text-sm font-medium text-[#eae6db] truncate ${fontClass}`}
                               >
-                                {personal.name}
+                                {persona.name}
                               </span>
-                              {personal.isDefault && (
+                              {persona.isDefault && (
                                 <span className="text-xs px-1.5 py-0.5 bg-amber-500/20 text-amber-400 rounded">
-                                  {t("personal.default")}
+                                  {t("persona.default")}
                                 </span>
                               )}
                             </div>
-                            {personal.description && (
+                            {persona.description && (
                               <div className="text-xs text-[#8a8a8a] truncate mt-0.5">
-                                {personal.description}
+                                {persona.description}
                               </div>
                             )}
                           </div>
-                          {selectedPersonalId === personal.id && (
+                          {selectedPersonaId === persona.id && (
                             <svg
                               width="16"
                               height="16"
@@ -321,22 +321,22 @@ export default function PersonalSelectorModal({
                   </div>
                 )}
 
-                {/* Current Personal Info */}
-                {currentPersonal && (
+                {/* Current Persona Info */}
+                {currentPersona && (
                   <div className="p-3 rounded-lg bg-[#2a261f]/30 border border-[#534741]/30">
                     <div
                       className={`text-xs text-[#a18d6f] mb-1 ${fontClass}`}
                     >
-                      {t("personalSelector.currentPersonal")}
+                      {t("personaSelector.currentPersona")}
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-xs font-bold text-white">
-                        {currentPersonal.name.charAt(0).toUpperCase()}
+                        {currentPersona.name.charAt(0).toUpperCase()}
                       </div>
                       <span
                         className={`text-sm text-[#eae6db] ${fontClass}`}
                       >
-                        {currentPersonal.name}
+                        {currentPersona.name}
                       </span>
                     </div>
                   </div>
@@ -345,7 +345,7 @@ export default function PersonalSelectorModal({
                 {/* Save Button */}
                 <button
                   onClick={handleSave}
-                  disabled={isSaving || (!useDefault && !selectedPersonalId)}
+                  disabled={isSaving || (!useDefault && !selectedPersonaId)}
                   className={`w-full group relative px-6 py-3 bg-transparent border border-[#c0a480] text-[#c0a480] rounded-lg text-sm font-medium transition-all duration-500 hover:border-[#f9c86d] hover:text-[#f9c86d] hover:shadow-lg hover:shadow-[#c0a480]/20 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden ${serifFontClass}`}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-[#c0a480]/0 via-[#c0a480]/10 to-[#c0a480]/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
@@ -380,7 +380,7 @@ export default function PersonalSelectorModal({
                 <div
                   className={`text-center text-xs text-[#8a8a8a] ${fontClass}`}
                 >
-                  <p>{t("personalSelector.helperText")}</p>
+                  <p>{t("personaSelector.helperText")}</p>
                 </div>
               </div>
             )}

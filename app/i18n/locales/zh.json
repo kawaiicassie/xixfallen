@@ -204,7 +204,10 @@
     "updateFailed": "更新失败，请重试",
     "personal": "人设",
     "managePersonal": "管理人设",
-    "personalDescription": "创建和管理您的角色扮演人设"
+    "personalDescription": "创建和管理您的角色扮演人设",
+    "persona": "人设",
+    "managePersona": "管理人设",
+    "personaDescription": "创建和管理您的角色扮演人设"
   },
   "personal": {
     "title": "人设管理",
@@ -225,8 +228,27 @@
     "noDescription": "无描述",
     "noPersonality": "未定义性格",
     "namePlaceholder": "输入人设名称...",
-    "descriptionPlaceholder": "描述您的人设...",
+    "descriptionPlaceholder": "描述您的人设（外貌、背景、性格）...",
     "personalityPlaceholder": "定义性格特征..."
+  },
+  "persona": {
+    "title": "人设管理",
+    "subtitle": "创建和管理您的角色扮演人设",
+    "name": "名称",
+    "description": "描述",
+    "edit": "编辑",
+    "delete": "删除",
+    "setDefault": "设为默认",
+    "addNew": "添加新人设",
+    "create": "创建",
+    "cancel": "取消",
+    "save": "保存",
+    "confirmDelete": "确定要删除 \"{name}\" 吗？",
+    "default": "默认",
+    "selectOrCreate": "选择人设或创建新的",
+    "noDescription": "无描述",
+    "namePlaceholder": "输入人设名称...",
+    "descriptionPlaceholder": "描述您的人设（外貌、背景、性格）..."
   },
   "personalSelector": {
     "title": "选择人设",
@@ -235,6 +257,15 @@
     "currentDefault": "当前默认",
     "selectSpecific": "或选择特定人设：",
     "currentPersonal": "当前使用",
+    "helperText": "选定的人设将在与此角色聊天时使用"
+  },
+  "personaSelector": {
+    "title": "选择人设",
+    "description": "选择与此角色聊天时使用的人设",
+    "useDefault": "使用默认人设",
+    "currentDefault": "当前默认",
+    "selectSpecific": "或选择特定人设：",
+    "currentPersona": "当前使用",
     "helperText": "选定的人设将在与此角色聊天时使用"
   },
   "storiesPage": {

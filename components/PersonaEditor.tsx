@@ -3,132 +3,128 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/app/i18n";
-import { Personal } from "@/lib/models/personal-model";
+import { Persona } from "@/lib/models/persona-model";
 import {
-  getAllPersonals,
-  savePersonal,
-  deletePersonal,
-  setDefaultPersonal,
-  createNewPersonal,
-} from "@/lib/data/roleplay/personal-operation";
+  getAllPersonas,
+  savePersona,
+  deletePersona,
+  setDefaultPersona,
+  createNewPersona,
+} from "@/lib/data/roleplay/persona-operation";
 
-interface PersonalEditorProps {
+interface PersonaEditorProps {
   isOpen: boolean;
   onClose: () => void;
-  onPersonalChange?: () => void;
+  onPersonaChange?: () => void;
 }
 
-export default function PersonalEditor({
+export default function PersonaEditor({
   isOpen,
   onClose,
-  onPersonalChange,
-}: PersonalEditorProps) {
+  onPersonaChange,
+}: PersonaEditorProps) {
   const { t, fontClass, serifFontClass } = useLanguage();
-  const [personals, setPersonals] = useState<Personal[]>([]);
-  const [selectedPersonal, setSelectedPersonal] = useState<Personal | null>(
+  const [personas, setPersonas] = useState<Persona[]>([]);
+  const [selectedPersona, setSelectedPersona] = useState<Persona | null>(
     null,
   );
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
-  const [newPersonalName, setNewPersonalName] = useState("");
+  const [newPersonaName, setNewPersonaName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const [editForm, setEditForm] = useState({
     name: "",
     description: "",
-    personality: "",
   });
 
   useEffect(() => {
     if (isOpen) {
-      loadPersonals();
+      loadPersonas();
     }
   }, [isOpen]);
 
-  const loadPersonals = async () => {
+  const loadPersonas = async () => {
     setIsLoading(true);
     try {
-      const data = await getAllPersonals();
-      setPersonals(data);
-      if (data.length > 0 && !selectedPersonal) {
-        const defaultPersonal = data.find((p) => p.isDefault) || data[0];
-        setSelectedPersonal(defaultPersonal);
+      const data = await getAllPersonas();
+      setPersonas(data);
+      if (data.length > 0 && !selectedPersona) {
+        const defaultPersona = data.find((p) => p.isDefault) || data[0];
+        setSelectedPersona(defaultPersona);
       }
     } catch (error) {
-      console.error("Failed to load personals:", error);
+      console.error("Failed to load personas:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleSelectPersonal = (personal: Personal) => {
-    setSelectedPersonal(personal);
+  const handleSelectPersona = (persona: Persona) => {
+    setSelectedPersona(persona);
     setIsEditing(false);
     setEditForm({
-      name: personal.name,
-      description: personal.description,
-      personality: personal.personality,
+      name: persona.name,
+      description: persona.description,
     });
   };
 
   const handleStartEdit = () => {
-    if (selectedPersonal) {
+    if (selectedPersona) {
       setEditForm({
-        name: selectedPersonal.name,
-        description: selectedPersonal.description,
-        personality: selectedPersonal.personality,
+        name: selectedPersona.name,
+        description: selectedPersona.description,
       });
       setIsEditing(true);
     }
   };
 
   const handleSaveEdit = async () => {
-    if (!selectedPersonal || !editForm.name.trim()) return;
+    if (!selectedPersona || !editForm.name.trim()) return;
 
     setIsLoading(true);
     try {
-      const updated: Personal = {
-        ...selectedPersonal,
+      const updated: Persona = {
+        ...selectedPersona,
         name: editForm.name.trim(),
         description: editForm.description,
-        personality: editForm.personality,
       };
-      await savePersonal(updated);
-      await loadPersonals();
-      setSelectedPersonal(updated);
+      await savePersona(updated);
+      await loadPersonas();
+      setSelectedPersona(updated);
       setIsEditing(false);
-      onPersonalChange?.();
+      onPersonaChange?.();
     } catch (error) {
-      console.error("Failed to save personal:", error);
+      console.error("Failed to save persona:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleCreateNew = async () => {
-    if (!newPersonalName.trim()) return;
+    if (!newPersonaName.trim()) return;
 
     setIsLoading(true);
     try {
-      const newPersonal = await createNewPersonal(newPersonalName.trim());
-      await loadPersonals();
-      setSelectedPersonal(newPersonal);
-      setNewPersonalName("");
+      const newPersona = await createNewPersona(newPersonaName.trim());
+      await loadPersonas();
+      setSelectedPersona(newPersona);
+      setNewPersonaName("");
       setIsCreating(false);
-      onPersonalChange?.();
+      onPersonaChange?.();
     } catch (error) {
-      console.error("Failed to create personal:", error);
+      console.error("Failed to create persona:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleDelete = async () => {
-    if (!selectedPersonal || personals.length <= 1) return;
+    if (!selectedPersona || personas.length <= 1) return;
 
     if (
       !confirm(
-        t("personal.confirmDelete").replace("{name}", selectedPersonal.name),
+        t("persona.confirmDelete").replace("{name}", selectedPersona.name),
       )
     ) {
       return;
@@ -136,27 +132,27 @@ export default function PersonalEditor({
 
     setIsLoading(true);
     try {
-      await deletePersonal(selectedPersonal.id);
-      await loadPersonals();
-      setSelectedPersonal(null);
-      onPersonalChange?.();
+      await deletePersona(selectedPersona.id);
+      await loadPersonas();
+      setSelectedPersona(null);
+      onPersonaChange?.();
     } catch (error) {
-      console.error("Failed to delete personal:", error);
+      console.error("Failed to delete persona:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleSetDefault = async () => {
-    if (!selectedPersonal) return;
+    if (!selectedPersona) return;
 
     setIsLoading(true);
     try {
-      await setDefaultPersonal(selectedPersonal.id);
-      await loadPersonals();
-      onPersonalChange?.();
+      await setDefaultPersona(selectedPersona.id);
+      await loadPersonas();
+      onPersonaChange?.();
     } catch (error) {
-      console.error("Failed to set default personal:", error);
+      console.error("Failed to set default persona:", error);
     } finally {
       setIsLoading(false);
     }
@@ -204,41 +200,41 @@ export default function PersonalEditor({
             </button>
 
             <h2 className={`text-xl font-bold text-[#f4e8c1] ${serifFontClass}`}>
-              {t("personal.title")}
+              {t("persona.title")}
             </h2>
             <p className={`text-sm text-[#888] mt-1 ${fontClass}`}>
-              {t("personal.subtitle")}
+              {t("persona.subtitle")}
             </p>
           </div>
 
           {/* Content */}
           <div className="relative flex-1 overflow-hidden flex">
-            {/* Personal List */}
+            {/* Persona List */}
             <div className="w-1/3 border-r border-[#3a3a3a]/50 overflow-y-auto p-4">
               <div className="space-y-2">
-                {personals.map((personal) => (
+                {personas.map((persona) => (
                   <button
-                    key={personal.id}
-                    onClick={() => handleSelectPersonal(personal)}
+                    key={persona.id}
+                    onClick={() => handleSelectPersona(persona)}
                     className={`w-full text-left p-3 rounded-lg transition-all duration-200 ${
-                      selectedPersonal?.id === personal.id
+                      selectedPersona?.id === persona.id
                         ? "bg-amber-500/20 border border-amber-500/40"
                         : "bg-[#2a2a2a]/50 border border-transparent hover:bg-[#2a2a2a] hover:border-[#3a3a3a]"
                     }`}
                   >
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-xs font-bold text-white">
-                        {personal.name.charAt(0).toUpperCase()}
+                        {persona.name.charAt(0).toUpperCase()}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div
                           className={`text-sm font-medium text-[#f4e8c1] truncate ${fontClass}`}
                         >
-                          {personal.name}
+                          {persona.name}
                         </div>
-                        {personal.isDefault && (
+                        {persona.isDefault && (
                           <div className="text-xs text-amber-400">
-                            {t("personal.default")}
+                            {t("persona.default")}
                           </div>
                         )}
                       </div>
@@ -251,28 +247,28 @@ export default function PersonalEditor({
                   <div className="p-3 bg-[#2a2a2a] rounded-lg border border-[#3a3a3a]">
                     <input
                       type="text"
-                      value={newPersonalName}
-                      onChange={(e) => setNewPersonalName(e.target.value)}
-                      placeholder={t("personal.namePlaceholder")}
+                      value={newPersonaName}
+                      onChange={(e) => setNewPersonaName(e.target.value)}
+                      placeholder={t("persona.namePlaceholder")}
                       className="w-full bg-[#1a1a1a] border border-[#3a3a3a] rounded px-2 py-1 text-sm text-[#f4e8c1] focus:outline-none focus:border-amber-500/50"
                       autoFocus
                     />
                     <div className="flex gap-2 mt-2">
                       <button
                         onClick={handleCreateNew}
-                        disabled={!newPersonalName.trim() || isLoading}
+                        disabled={!newPersonaName.trim() || isLoading}
                         className="flex-1 px-2 py-1 bg-amber-500/20 text-amber-400 text-xs rounded hover:bg-amber-500/30 disabled:opacity-50"
                       >
-                        {t("personal.create")}
+                        {t("persona.create")}
                       </button>
                       <button
                         onClick={() => {
                           setIsCreating(false);
-                          setNewPersonalName("");
+                          setNewPersonaName("");
                         }}
                         className="px-2 py-1 bg-[#3a3a3a] text-[#888] text-xs rounded hover:bg-[#4a4a4a]"
                       >
-                        {t("personal.cancel")}
+                        {t("persona.cancel")}
                       </button>
                     </div>
                   </div>
@@ -293,16 +289,16 @@ export default function PersonalEditor({
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
                     <span className={`text-sm ${fontClass}`}>
-                      {t("personal.addNew")}
+                      {t("persona.addNew")}
                     </span>
                   </button>
                 )}
               </div>
             </div>
 
-            {/* Personal Details */}
+            {/* Persona Details */}
             <div className="flex-1 overflow-y-auto p-4">
-              {selectedPersonal ? (
+              {selectedPersona ? (
                 <div className="space-y-4">
                   {/* Actions */}
                   <div className="flex gap-2 mb-4">
@@ -312,24 +308,24 @@ export default function PersonalEditor({
                           onClick={handleStartEdit}
                           className="px-3 py-1.5 bg-amber-500/20 text-amber-400 text-xs rounded-lg hover:bg-amber-500/30 transition-colors"
                         >
-                          {t("personal.edit")}
+                          {t("persona.edit")}
                         </button>
-                        {!selectedPersonal.isDefault && (
+                        {!selectedPersona.isDefault && (
                           <button
                             onClick={handleSetDefault}
                             disabled={isLoading}
                             className="px-3 py-1.5 bg-green-500/20 text-green-400 text-xs rounded-lg hover:bg-green-500/30 transition-colors disabled:opacity-50"
                           >
-                            {t("personal.setDefault")}
+                            {t("persona.setDefault")}
                           </button>
                         )}
-                        {personals.length > 1 && (
+                        {personas.length > 1 && (
                           <button
                             onClick={handleDelete}
                             disabled={isLoading}
                             className="px-3 py-1.5 bg-red-500/20 text-red-400 text-xs rounded-lg hover:bg-red-500/30 transition-colors disabled:opacity-50"
                           >
-                            {t("personal.delete")}
+                            {t("persona.delete")}
                           </button>
                         )}
                       </>
@@ -342,7 +338,7 @@ export default function PersonalEditor({
                       <label
                         className={`block text-xs font-medium text-[#a18d6f] mb-2 ${fontClass}`}
                       >
-                        {t("personal.name")}
+                        {t("persona.name")}
                       </label>
                       {isEditing ? (
                         <input
@@ -355,7 +351,7 @@ export default function PersonalEditor({
                         />
                       ) : (
                         <div className={`text-[#f4e8c1] ${fontClass}`}>
-                          {selectedPersonal.name}
+                          {selectedPersona.name}
                         </div>
                       )}
                     </div>
@@ -364,7 +360,7 @@ export default function PersonalEditor({
                       <label
                         className={`block text-xs font-medium text-[#a18d6f] mb-2 ${fontClass}`}
                       >
-                        {t("personal.description")}
+                        {t("persona.description")}
                       </label>
                       {isEditing ? (
                         <textarea
@@ -375,45 +371,16 @@ export default function PersonalEditor({
                               description: e.target.value,
                             })
                           }
-                          rows={3}
-                          placeholder={t("personal.descriptionPlaceholder")}
+                          rows={6}
+                          placeholder={t("persona.descriptionPlaceholder")}
                           className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-lg px-3 py-2 text-[#f4e8c1] text-sm focus:outline-none focus:border-amber-500/50 resize-none"
                         />
                       ) : (
                         <div
-                          className={`text-[#ccc] text-sm ${fontClass} ${!selectedPersonal.description && "text-[#666] italic"}`}
+                          className={`text-[#ccc] text-sm ${fontClass} ${!selectedPersona.description && "text-[#666] italic"}`}
                         >
-                          {selectedPersonal.description ||
-                            t("personal.noDescription")}
-                        </div>
-                      )}
-                    </div>
-
-                    <div>
-                      <label
-                        className={`block text-xs font-medium text-[#a18d6f] mb-2 ${fontClass}`}
-                      >
-                        {t("personal.personality")}
-                      </label>
-                      {isEditing ? (
-                        <textarea
-                          value={editForm.personality}
-                          onChange={(e) =>
-                            setEditForm({
-                              ...editForm,
-                              personality: e.target.value,
-                            })
-                          }
-                          rows={4}
-                          placeholder={t("personal.personalityPlaceholder")}
-                          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-lg px-3 py-2 text-[#f4e8c1] text-sm focus:outline-none focus:border-amber-500/50 resize-none"
-                        />
-                      ) : (
-                        <div
-                          className={`text-[#ccc] text-sm ${fontClass} ${!selectedPersonal.personality && "text-[#666] italic"}`}
-                        >
-                          {selectedPersonal.personality ||
-                            t("personal.noPersonality")}
+                          {selectedPersona.description ||
+                            t("persona.noDescription")}
                         </div>
                       )}
                     </div>
@@ -425,13 +392,13 @@ export default function PersonalEditor({
                           disabled={!editForm.name.trim() || isLoading}
                           className="px-4 py-2 bg-amber-500 text-white text-sm rounded-lg hover:bg-amber-600 transition-colors disabled:opacity-50"
                         >
-                          {t("personal.save")}
+                          {t("persona.save")}
                         </button>
                         <button
                           onClick={() => setIsEditing(false)}
                           className="px-4 py-2 bg-[#3a3a3a] text-[#ccc] text-sm rounded-lg hover:bg-[#4a4a4a] transition-colors"
                         >
-                          {t("personal.cancel")}
+                          {t("persona.cancel")}
                         </button>
                       </div>
                     )}
@@ -439,7 +406,7 @@ export default function PersonalEditor({
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-full text-[#666]">
-                  <p className={fontClass}>{t("personal.selectOrCreate")}</p>
+                  <p className={fontClass}>{t("persona.selectOrCreate")}</p>
                 </div>
               )}
             </div>

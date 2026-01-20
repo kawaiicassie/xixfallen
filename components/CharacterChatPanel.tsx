@@ -24,10 +24,10 @@ import { useEffect, useRef, useState } from "react";
 import ChatHtmlBubble from "@/components/ChatHtmlBubble";
 import ThinkBubble from "@/components/ThinkBubble";
 import { CharacterAvatarBackground } from "@/components/CharacterAvatarBackground";
-import PersonalSelectorModal from "@/components/PersonalSelectorModal";
+import PersonaSelectorModal from "@/components/PersonaSelectorModal";
 import { getDisplayUsername } from "@/utils/username-helper";
-import { getPersonalForCharacter } from "@/lib/data/roleplay/personal-operation";
-import { Personal } from "@/lib/models/personal-model";
+import { getPersonaForCharacter } from "@/lib/data/roleplay/persona-operation";
+import { Persona } from "@/lib/models/persona-model";
 import { trackButtonClick, trackFormSubmit } from "@/utils/google-analytics";
 
 /**
@@ -108,9 +108,9 @@ export default function CharacterChatPanel({
   const [streamingTarget, setStreamingTarget] = useState<number>(-1);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Personal selector states
-  const [showPersonalModal, setShowPersonalModal] = useState(false);
-  const [currentPersonal, setCurrentPersonal] = useState<Personal | null>(null);
+  // Persona selector states
+  const [showPersonaModal, setShowPersonaModal] = useState(false);
+  const [currentPersona, setCurrentPersona] = useState<Persona | null>(null);
   const [currentDisplayName, setCurrentDisplayName] = useState("");
 
   // Toggle buttons expansion state
@@ -152,24 +152,24 @@ export default function CharacterChatPanel({
       localStorage.setItem("streamingEnabled", "true");
     }
 
-    // Load personal for this character
-    loadCurrentPersonal();
+    // Load persona for this character
+    loadCurrentPersona();
   }, []);
 
-  // Load current personal for this character
-  const loadCurrentPersonal = async () => {
+  // Load current persona for this character
+  const loadCurrentPersona = async () => {
     if (character?.id) {
       try {
-        const personal = await getPersonalForCharacter(character.id);
-        setCurrentPersonal(personal);
-        // Use personal name as display name, fallback to username helper
-        if (personal?.name) {
-          setCurrentDisplayName(personal.name);
+        const persona = await getPersonaForCharacter(character.id);
+        setCurrentPersona(persona);
+        // Use persona name as display name, fallback to username helper
+        if (persona?.name) {
+          setCurrentDisplayName(persona.name);
         } else {
           setCurrentDisplayName(getDisplayUsername());
         }
       } catch (error) {
-        console.error("Failed to load personal:", error);
+        console.error("Failed to load persona:", error);
         setCurrentDisplayName(getDisplayUsername());
       }
     } else {
@@ -177,11 +177,11 @@ export default function CharacterChatPanel({
     }
   };
 
-  // Handle personal change from modal
-  const handlePersonalChange = (personal: Personal | null) => {
-    setCurrentPersonal(personal);
-    if (personal?.name) {
-      setCurrentDisplayName(personal.name);
+  // Handle persona change from modal
+  const handlePersonaChange = (persona: Persona | null) => {
+    setCurrentPersona(persona);
+    if (persona?.name) {
+      setCurrentDisplayName(persona.name);
     } else {
       setCurrentDisplayName(getDisplayUsername());
     }
@@ -1489,7 +1489,7 @@ export default function CharacterChatPanel({
                     type="button"
                     onClick={() => {
                       trackButtonClick("page", "选择人设");
-                      setShowPersonalModal(true);
+                      setShowPersonaModal(true);
                     }}
                     className={"px-1.5 sm:px-2 md:px-4 py-1.5 text-xs rounded-full border transition-all duration-300 whitespace-nowrap min-w-fit bg-[#2a261f] text-[#f9c86d] border-[#534741] hover:border-[#f9c86d] shadow-sm hover:shadow-md"}
                   >
@@ -1557,12 +1557,12 @@ export default function CharacterChatPanel({
         </form>
       </div>
 
-      {/* Personal Selector Modal */}
-      <PersonalSelectorModal
-        isOpen={showPersonalModal}
-        onClose={() => setShowPersonalModal(false)}
+      {/* Persona Selector Modal */}
+      <PersonaSelectorModal
+        isOpen={showPersonaModal}
+        onClose={() => setShowPersonaModal(false)}
         characterId={character?.id || ""}
-        onPersonalChange={handlePersonalChange}
+        onPersonaChange={handlePersonaChange}
       />
     </div>
   );

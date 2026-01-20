@@ -6,7 +6,7 @@ import { useLanguage } from "@/app/i18n";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { Toast } from "@/components/Toast";
-import PersonalEditor from "@/components/PersonalEditor";
+import PersonaEditor from "@/components/PersonaEditor";
 
 interface AccountModalProps {
   isOpen: boolean;
@@ -23,7 +23,7 @@ export default function AccountModal({ isOpen, onClose }: AccountModalProps) {
   const [editedUsername, setEditedUsername] = useState(user?.username || "");
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  const [isPersonalEditorOpen, setIsPersonalEditorOpen] = useState(false);
+  const [isPersonaEditorOpen, setIsPersonaEditorOpen] = useState(false);
 
   // Add ErrorToast state
   const [errorToast, setErrorToast] = useState({
@@ -299,11 +299,11 @@ export default function AccountModal({ isOpen, onClose }: AccountModalProps) {
             <div className="px-6 py-4">
               <div className="flex items-center justify-between mb-3">
                 <label className={`text-xs font-medium text-[#a18d6f] ${fontClass}`}>
-                  {t("account.personal")}
+                  {t("account.persona")}
                 </label>
               </div>
               <button
-                onClick={() => setIsPersonalEditorOpen(true)}
+                onClick={() => setIsPersonaEditorOpen(true)}
                 className="w-full group relative overflow-hidden bg-purple-600/10 hover:bg-purple-600/20 border border-purple-500/30 hover:border-purple-500/50 text-purple-400 hover:text-purple-300 rounded-xl py-3 px-4 transition-all duration-300 font-medium"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600/0 via-purple-600/5 to-purple-600/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
@@ -313,7 +313,7 @@ export default function AccountModal({ isOpen, onClose }: AccountModalProps) {
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                     <circle cx="12" cy="7" r="4"></circle>
                   </svg>
-                  <span className={`${fontClass}`}>{t("account.managePersonal")}</span>
+                  <span className={`${fontClass}`}>{t("account.managePersona")}</span>
                 </div>
               </button>
               <p className={`text-xs text-[#666] mt-2 ${fontClass}`}>
@@ -372,9 +372,9 @@ export default function AccountModal({ isOpen, onClose }: AccountModalProps) {
         type="error"
       />
 
-      <PersonalEditor
-        isOpen={isPersonalEditorOpen}
-        onClose={() => setIsPersonalEditorOpen(false)}
+      <PersonaEditor
+        isOpen={isPersonaEditorOpen}
+        onClose={() => setIsPersonaEditorOpen(false)}
       />
     </AnimatePresence>
   );
