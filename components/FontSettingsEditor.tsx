@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/app/i18n";
 import { useMessageFontStore, POPULAR_GOOGLE_FONTS, getAllAvailableFonts } from "@/contexts/MessageFontStore";
 import { toast } from "react-hot-toast";
@@ -23,6 +23,21 @@ export const FontSettingsEditor: React.FC<FontSettingsEditorProps> = ({ onViewSw
   const [isSaving, setIsSaving] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [filterCategory, setFilterCategory] = useState<FontCategory>("all");
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setActiveDropdown(null);
+      }
+    };
+
+    if (activeDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [activeDropdown]);
 
   // Load all fonts on mount
   useEffect(() => {
@@ -94,7 +109,7 @@ export const FontSettingsEditor: React.FC<FontSettingsEditorProps> = ({ onViewSw
 
         <div className="flex flex-col sm:flex-row gap-3">
           {/* Font Selector */}
-          <div className="flex-1 relative">
+          <div className="flex-1 relative" ref={isOpen ? dropdownRef : undefined}>
             <button
               onClick={() => setActiveDropdown(isOpen ? null : fontKey)}
               className="w-full px-3 py-2 bg-gradient-to-br from-[#1a1816] via-[#252220] to-[#1a1816] text-[#eae6db] rounded-lg border border-[#534741]/60 focus:border-amber-500/60 focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition-all duration-300 text-left flex items-center justify-between"
@@ -120,13 +135,16 @@ export const FontSettingsEditor: React.FC<FontSettingsEditorProps> = ({ onViewSw
             </button>
 
             {isOpen && (
-              <div className="absolute z-50 w-full mt-2 bg-[#1a1816] border border-[#534741] rounded-lg shadow-xl max-h-64 overflow-hidden">
+              <div className="mt-2 bg-[#1a1816] border border-[#534741] rounded-lg shadow-xl overflow-hidden">
                 {/* Category Filter */}
-                <div className="flex gap-1 p-2 border-b border-[#534741]/50 overflow-x-auto">
+                <div className="flex gap-1 p-2 border-b border-[#534741]/50 overflow-x-auto fantasy-scrollbar">
                   {(["all", "serif", "sans-serif", "cursive", "monospace", "custom"] as FontCategory[]).map((cat) => (
                     <button
                       key={cat}
-                      onClick={() => setFilterCategory(cat)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setFilterCategory(cat);
+                      }}
                       className={`px-2 py-1 text-xs rounded transition-colors whitespace-nowrap ${
                         filterCategory === cat
                           ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
@@ -329,13 +347,6 @@ export const FontSettingsEditor: React.FC<FontSettingsEditorProps> = ({ onViewSw
         </div>
       </div>
 
-      {/* Click outside to close dropdown */}
-      {activeDropdown && (
-        <div
-          className="fixed inset-0 z-40"
-          onClick={() => setActiveDropdown(null)}
-        />
-      )}
     </div>
   );
 };
