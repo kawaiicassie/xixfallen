@@ -147,7 +147,7 @@ export const FontSettingsEditor: React.FC<FontSettingsEditorProps> = ({ onViewSw
                       }}
                       className={`px-2 py-1 text-xs rounded transition-colors whitespace-nowrap ${
                         filterCategory === cat
-                          ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                          ? "bg-amber-500/20 text-pink-300 border border-amber-500/30"
                           : "text-[#a18d6f] hover:text-[#eae6db] hover:bg-[#2a261f]"
                       }`}
                     >
@@ -165,7 +165,7 @@ export const FontSettingsEditor: React.FC<FontSettingsEditorProps> = ({ onViewSw
                       setActiveDropdown(null);
                     }}
                     className={`w-full px-3 py-2 text-left text-sm hover:bg-[#2a261f] transition-colors ${
-                      !currentFont ? "text-amber-300 bg-amber-500/10" : "text-[#eae6db]"
+                      !currentFont ? "text-pink-300 bg-amber-500/10" : "text-[#eae6db]"
                     }`}
                   >
                     {t("fontSettings.defaultFont") || "Default (System)"}
@@ -179,7 +179,7 @@ export const FontSettingsEditor: React.FC<FontSettingsEditorProps> = ({ onViewSw
                         setActiveDropdown(null);
                       }}
                       className={`w-full px-3 py-2 text-left text-sm hover:bg-[#2a261f] transition-colors flex items-center justify-between ${
-                        currentFont === font.name ? "text-amber-300 bg-amber-500/10" : "text-[#eae6db]"
+                        currentFont === font.name ? "text-pink-300 bg-amber-500/10" : "text-[#eae6db]"
                       }`}
                       style={{ fontFamily: `'${font.name}', ${font.category}` }}
                     >

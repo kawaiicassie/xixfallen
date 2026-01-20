@@ -292,7 +292,7 @@ const EditCharacterModal: React.FC<EditCharacterModalProps> = ({
                       type="submit"
                       disabled={isLoading}
                       onClick={(e) => {trackButtonClick("EditCharacterModal", "保存编辑角色");onClose();}}
-                      className={`text-amber-400 hover:text-amber-300 transition-colors duration-300 ${serifFontClass}`}
+                      className={`text-pink-400 hover:text-pink-300 transition-colors duration-300 ${serifFontClass}`}
                     >
                       {isLoading ? (
                         <div className="h-5 w-5 border-2 border-[#1a1816] border-t-transparent rounded-full animate-spin"></div>

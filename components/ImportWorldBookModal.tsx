@@ -262,11 +262,11 @@ export default function ImportWorldBookModal({
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-3">
       <div className="relative bg-gradient-to-br from-[#1a1816]/95 via-[#252220]/95 to-[#1a1816]/95 backdrop-blur-xl border border-[#534741]/60 rounded-xl shadow-2xl max-w-xl w-full max-h-[85vh] overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-blue-500/5 opacity-50 animate-pulse"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 via-transparent to-blue-500/5 opacity-50 animate-pulse"></div>
 
         <div className="relative p-3 border-b border-[#534741]/40 bg-gradient-to-r from-[#252220]/80 via-[#1a1816]/60 to-[#252220]/80 backdrop-blur-sm">
           <div className="flex justify-between items-center">
-            <h2 className={`text-base font-semibold text-[#eae6db] ${serifFontClass} bg-gradient-to-r from-amber-300 via-amber-200 to-amber-300 bg-clip-text text-transparent`}>
+            <h2 className={`text-base font-semibold text-[#eae6db] ${serifFontClass} bg-gradient-to-r from-pink-300 via-amber-200 to-pink-300 bg-clip-text text-transparent`}>
               {t("worldBook.importWorldBook")}
             </h2>
             <button
@@ -286,7 +286,7 @@ export default function ImportWorldBookModal({
               onClick={() => setActiveTab("file")}
               className={`relative flex-1 px-2 py-1.5 text-xs font-medium rounded-md transition-all duration-300 ${
                 activeTab === "file"
-                  ? "bg-gradient-to-r from-amber-600/90 to-amber-700/90 text-white shadow-lg shadow-amber-500/20"
+                  ? "bg-gradient-to-r from-pink-600/90 to-pink-700/90 text-white shadow-lg shadow-pink-500/20"
                   : "text-[#a18d6f] hover:text-[#eae6db] hover:bg-[#252220]/50"
               } ${serifFontClass}`}
             >
@@ -298,7 +298,7 @@ export default function ImportWorldBookModal({
                 {t("worldBook.importFromJson")}
               </span>
               {activeTab === "file" && (
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 to-amber-600/20 rounded-md animate-pulse"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-pink-400/20 to-pink-600/20 rounded-md animate-pulse"></div>
               )}
             </button>
             <button
@@ -333,7 +333,7 @@ export default function ImportWorldBookModal({
               <div
                 className={`relative border-2 border-dashed rounded-lg p-4 text-center transition-all duration-300 cursor-pointer group ${
                   isDragging
-                    ? "border-amber-500/60 bg-amber-500/10 shadow-lg shadow-amber-500/20"
+                    ? "border-pink-500/60 bg-pink-500/10 shadow-lg shadow-pink-500/20"
                     : "border-[#534741]/60 hover:border-[#6b5b4f]/80 hover:bg-[#252220]/30"
                 }`}
                 onDragOver={handleDragOver}
@@ -341,17 +341,17 @@ export default function ImportWorldBookModal({
                 onDrop={handleDrop}
                 onClick={() => fileInputRef.current?.click()}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-blue-500/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 via-transparent to-blue-500/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative flex flex-col items-center space-y-2">
                   <div className="relative">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#a18d6f] group-hover:text-amber-400 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-[#a18d6f] group-hover:text-pink-400 transition-colors duration-300">
                       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                       <polyline points="14 2 14 8 20 8"></polyline>
                       <line x1="16" y1="13" x2="8" y2="13"></line>
                       <line x1="16" y1="17" x2="8" y2="17"></line>
                       <polyline points="10 9 9 9 8 9"></polyline>
                     </svg>
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-br from-amber-400 to-amber-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></div>
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></div>
                   </div>
                   <div>
                     <p className={`text-[#eae6db] font-medium text-sm ${serifFontClass}`}>{t("worldBook.dragDropJson")}</p>
@@ -379,7 +379,7 @@ export default function ImportWorldBookModal({
                     />
                     <div className={`w-4 h-4 rounded border-2 transition-all duration-300 ${
                       saveAsGlobal 
-                        ? "bg-gradient-to-br from-amber-500 to-amber-600 border-amber-500 shadow-lg shadow-amber-500/30" 
+                        ? "bg-gradient-to-br from-pink-500 to-pink-600 border-pink-500 shadow-lg shadow-pink-500/30" 
                         : "border-[#534741] group-hover:border-[#6b5b4f]"
                     }`}>
                       {saveAsGlobal && (
@@ -405,7 +405,7 @@ export default function ImportWorldBookModal({
                         value={globalName}
                         onChange={(e) => setGlobalName(e.target.value)}
                         placeholder={t("worldBook.enterGlobalWorldBookName")}
-                        className="w-full px-2 py-1.5 text-sm bg-[#1a1816]/60 backdrop-blur-sm border border-[#534741]/60 rounded-md text-[#eae6db] placeholder-[#a18d6f]/60 focus:border-amber-500/60 focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition-all duration-300"
+                        className="w-full px-2 py-1.5 text-sm bg-[#1a1816]/60 backdrop-blur-sm border border-[#534741]/60 rounded-md text-[#eae6db] placeholder-[#a18d6f]/60 focus:border-pink-500/60 focus:outline-none focus:ring-2 focus:ring-pink-500/20 transition-all duration-300"
                       />
                     </div>
                     <div>
@@ -417,7 +417,7 @@ export default function ImportWorldBookModal({
                         onChange={(e) => setGlobalDescription(e.target.value)}
                         placeholder={t("worldBook.enterDescriptionForThisGlobalWorldBook")}
                         rows={2}
-                        className="w-full px-2 py-1.5 text-sm bg-[#1a1816]/60 backdrop-blur-sm border border-[#534741]/60 rounded-md text-[#eae6db] placeholder-[#a18d6f]/60 focus:border-amber-500/60 focus:outline-none focus:ring-2 focus:ring-amber-500/20 resize-none transition-all duration-300"
+                        className="w-full px-2 py-1.5 text-sm bg-[#1a1816]/60 backdrop-blur-sm border border-[#534741]/60 rounded-md text-[#eae6db] placeholder-[#a18d6f]/60 focus:border-pink-500/60 focus:outline-none focus:ring-2 focus:ring-pink-500/20 resize-none transition-all duration-300"
                       />
                     </div>
                   </div>
@@ -484,7 +484,7 @@ export default function ImportWorldBookModal({
                                 {globalBook.entryCount}
                               </span>
                               <span className="flex items-center">
-                                <span className="w-1.5 h-1.5 bg-amber-400/60 rounded-full mr-1"></span>
+                                <span className="w-1.5 h-1.5 bg-pink-400/60 rounded-full mr-1"></span>
                                 {new Date(globalBook.createdAt).toLocaleDateString()}
                               </span>
                               {globalBook.sourceCharacterName && (

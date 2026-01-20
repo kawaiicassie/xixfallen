@@ -168,12 +168,12 @@ export default function ImportPresetModal({
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-3">
       <div className="relative bg-gradient-to-br from-[#1a1816]/95 via-[#252220]/95 to-[#1a1816]/95 backdrop-blur-xl border border-[#534741]/60 rounded-xl shadow-2xl max-w-xl w-full max-h-[85vh] overflow-hidden">
         {/* Animated background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-blue-500/5 opacity-50 animate-pulse"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 via-transparent to-blue-500/5 opacity-50 animate-pulse"></div>
         
         {/* Header */}
         <div className="relative p-3 border-b border-[#534741]/40 bg-gradient-to-r from-[#252220]/80 via-[#1a1816]/60 to-[#252220]/80 backdrop-blur-sm">
           <div className="flex justify-between items-center">
-            <h2 className={`text-base font-semibold text-[#eae6db] ${serifFontClass} bg-gradient-to-r from-amber-300 via-amber-200 to-amber-300 bg-clip-text text-transparent`}>
+            <h2 className={`text-base font-semibold text-[#eae6db] ${serifFontClass} bg-gradient-to-r from-pink-300 via-amber-200 to-pink-300 bg-clip-text text-transparent`}>
               {t("importPreset.title")}
             </h2>
             <button
@@ -198,18 +198,18 @@ export default function ImportPresetModal({
               onDrop={handleDrop}
               className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 ${
                 isDragging
-                  ? "border-amber-500/60 bg-amber-500/10 scale-[1.02]"
-                  : "border-[#534741]/60 hover:border-amber-500/40 hover:bg-amber-500/5"
+                  ? "border-pink-500/60 bg-pink-500/10 scale-[1.02]"
+                  : "border-[#534741]/60 hover:border-pink-500/40 hover:bg-pink-500/5"
               }`}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-amber-500/5 rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 via-transparent to-pink-500/5 rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
               
               <div className="relative z-10 space-y-3">
                 <div className="flex justify-center">
-                  <div className={`w-12 h-12 rounded-full bg-gradient-to-br from-amber-500/20 to-amber-600/30 flex items-center justify-center transition-transform duration-300 ${
+                  <div className={`w-12 h-12 rounded-full bg-gradient-to-br from-pink-500/20 to-pink-600/30 flex items-center justify-center transition-transform duration-300 ${
                     isDragging ? "scale-110 animate-pulse" : ""
                   }`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-pink-400">
                       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                       <polyline points="14 2 14 8 20 8"></polyline>
                       <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -232,7 +232,7 @@ export default function ImportPresetModal({
                   <button
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isImporting}
-                    className="px-4 py-2 bg-gradient-to-r from-amber-600/80 to-amber-500/80 hover:from-amber-500/90 hover:to-amber-400/90 text-white font-medium rounded-lg transition-all duration-300 shadow-lg hover:shadow-amber-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-4 py-2 bg-gradient-to-r from-pink-600/80 to-pink-500/80 hover:from-pink-500/90 hover:to-pink-400/90 text-white font-medium rounded-lg transition-all duration-300 shadow-lg hover:shadow-pink-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isImporting ? t("importPreset.importing") : t("importPreset.browseFiles")}
                   </button>
@@ -263,7 +263,7 @@ export default function ImportPresetModal({
                       value={customName}
                       onChange={(e) => setCustomName(e.target.value)}
                       placeholder={fileName}
-                      className="w-full px-3 py-2 bg-[#1a1816]/80 border border-[#534741]/60 rounded-lg text-[#eae6db] placeholder-[#534741]/80 focus:outline-none focus:ring-1 focus:ring-amber-500/40 transition-all duration-300"
+                      className="w-full px-3 py-2 bg-[#1a1816]/80 border border-[#534741]/60 rounded-lg text-[#eae6db] placeholder-[#534741]/80 focus:outline-none focus:ring-1 focus:ring-pink-500/40 transition-all duration-300"
                     />
                     <p className={`mt-1 text-xs text-[#a18d6f]/70 ${fontClass}`}>{t("importPreset.presetNameDesc")}</p>
                   </div>
@@ -278,7 +278,7 @@ export default function ImportPresetModal({
                     <button
                       onClick={handleImport}
                       disabled={isImporting}
-                      className="px-4 py-1.5 bg-gradient-to-r from-amber-600/80 to-amber-500/80 hover:from-amber-500/90 hover:to-amber-400/90 text-white font-medium rounded-lg transition-all duration-300 shadow-lg hover:shadow-amber-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-4 py-1.5 bg-gradient-to-r from-pink-600/80 to-pink-500/80 hover:from-pink-500/90 hover:to-pink-400/90 text-white font-medium rounded-lg transition-all duration-300 shadow-lg hover:shadow-pink-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isImporting ? t("importPreset.importing") : t("importPreset.confirmImport")}
                     </button>

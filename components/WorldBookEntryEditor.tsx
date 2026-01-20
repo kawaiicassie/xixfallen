@@ -109,7 +109,7 @@ export default function WorldBookEntryEditor({
         <div className="relative border-b border-[#534741]/60">
           <div className="p-4 bg-[#252220]/90">
             <div className="flex items-center justify-between">
-              <h3 className={`text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-300 to-yellow-300 ${serifFontClass}`}>
+              <h3 className={`text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-orange-300 to-yellow-300 ${serifFontClass}`}>
                 {editingEntry.id ? t("worldBook.editEntry") : t("worldBook.newEntry")}
               </h3>
               <button
@@ -183,7 +183,7 @@ export default function WorldBookEntryEditor({
                 ))}
                 <button
                   onClick={handleAddKeyword}
-                  className={`text-sm text-amber-400 hover:text-amber-300 transition-all duration-300 flex items-center space-x-1 group ${fontClass}`}
+                  className={`text-sm text-pink-400 hover:text-pink-300 transition-all duration-300 flex items-center space-x-1 group ${fontClass}`}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:scale-110">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -374,7 +374,7 @@ export default function WorldBookEntryEditor({
               <div className="p-4 bg-[#252220]/90">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <h3 className={`text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-300 to-yellow-300 ${serifFontClass}`}>
+                    <h3 className={`text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-orange-300 to-yellow-300 ${serifFontClass}`}>
                       {t("worldBook.contentLabel")} - {editingEntry.comment || t("worldBook.newEntry")}
                     </h3>
                     <span className={`text-sm text-[#a18d6f]/70 bg-[#252220]/60 px-3 py-1.5 rounded-md ${fontClass}`}>

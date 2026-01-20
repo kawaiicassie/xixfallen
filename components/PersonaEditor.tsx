@@ -178,7 +178,7 @@ export default function PersonaEditor({
           transition={{ type: "spring", damping: 25, stiffness: 300 }}
           className="relative w-full max-w-2xl max-h-[80vh] mx-4 bg-gradient-to-br from-[#1a1a1a] via-[#1e1e1e] to-[#1a1a1a] rounded-2xl shadow-2xl border border-[#3a3a3a]/50 overflow-hidden flex flex-col"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-purple-500/5 opacity-60" />
+          <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 via-transparent to-purple-500/5 opacity-60" />
 
           {/* Header */}
           <div className="relative p-6 pb-4 flex-shrink-0">
@@ -218,12 +218,12 @@ export default function PersonaEditor({
                     onClick={() => handleSelectPersona(persona)}
                     className={`w-full text-left p-3 rounded-lg transition-all duration-200 ${
                       selectedPersona?.id === persona.id
-                        ? "bg-amber-500/20 border border-amber-500/40"
+                        ? "bg-pink-500/20 border border-pink-500/40"
                         : "bg-[#2a2a2a]/50 border border-transparent hover:bg-[#2a2a2a] hover:border-[#3a3a3a]"
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-xs font-bold text-white">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-400 to-pink-500 flex items-center justify-center text-xs font-bold text-white">
                         {persona.name.charAt(0).toUpperCase()}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -233,7 +233,7 @@ export default function PersonaEditor({
                           {persona.name}
                         </div>
                         {persona.isDefault && (
-                          <div className="text-xs text-amber-400">
+                          <div className="text-xs text-pink-400">
                             {t("persona.default")}
                           </div>
                         )}
@@ -250,14 +250,14 @@ export default function PersonaEditor({
                       value={newPersonaName}
                       onChange={(e) => setNewPersonaName(e.target.value)}
                       placeholder={t("persona.namePlaceholder")}
-                      className="w-full bg-[#1a1a1a] border border-[#3a3a3a] rounded px-2 py-1 text-sm text-[#f4e8c1] focus:outline-none focus:border-amber-500/50"
+                      className="w-full bg-[#1a1a1a] border border-[#3a3a3a] rounded px-2 py-1 text-sm text-[#f4e8c1] focus:outline-none focus:border-pink-500/50"
                       autoFocus
                     />
                     <div className="flex gap-2 mt-2">
                       <button
                         onClick={handleCreateNew}
                         disabled={!newPersonaName.trim() || isLoading}
-                        className="flex-1 px-2 py-1 bg-amber-500/20 text-amber-400 text-xs rounded hover:bg-amber-500/30 disabled:opacity-50"
+                        className="flex-1 px-2 py-1 bg-pink-500/20 text-pink-400 text-xs rounded hover:bg-pink-500/30 disabled:opacity-50"
                       >
                         {t("persona.create")}
                       </button>
@@ -275,7 +275,7 @@ export default function PersonaEditor({
                 ) : (
                   <button
                     onClick={() => setIsCreating(true)}
-                    className="w-full p-3 rounded-lg border border-dashed border-[#3a3a3a] text-[#888] hover:text-amber-400 hover:border-amber-500/40 transition-all duration-200 flex items-center justify-center gap-2"
+                    className="w-full p-3 rounded-lg border border-dashed border-[#3a3a3a] text-[#888] hover:text-pink-400 hover:border-pink-500/40 transition-all duration-200 flex items-center justify-center gap-2"
                   >
                     <svg
                       width="14"
@@ -306,7 +306,7 @@ export default function PersonaEditor({
                       <>
                         <button
                           onClick={handleStartEdit}
-                          className="px-3 py-1.5 bg-amber-500/20 text-amber-400 text-xs rounded-lg hover:bg-amber-500/30 transition-colors"
+                          className="px-3 py-1.5 bg-pink-500/20 text-pink-400 text-xs rounded-lg hover:bg-pink-500/30 transition-colors"
                         >
                           {t("persona.edit")}
                         </button>
@@ -347,7 +347,7 @@ export default function PersonaEditor({
                           onChange={(e) =>
                             setEditForm({ ...editForm, name: e.target.value })
                           }
-                          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-lg px-3 py-2 text-[#f4e8c1] text-sm focus:outline-none focus:border-amber-500/50"
+                          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-lg px-3 py-2 text-[#f4e8c1] text-sm focus:outline-none focus:border-pink-500/50"
                         />
                       ) : (
                         <div className={`text-[#f4e8c1] ${fontClass}`}>
@@ -373,7 +373,7 @@ export default function PersonaEditor({
                           }
                           rows={6}
                           placeholder={t("persona.descriptionPlaceholder")}
-                          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-lg px-3 py-2 text-[#f4e8c1] text-sm focus:outline-none focus:border-amber-500/50 resize-none"
+                          className="w-full bg-[#2a2a2a] border border-[#3a3a3a] rounded-lg px-3 py-2 text-[#f4e8c1] text-sm focus:outline-none focus:border-pink-500/50 resize-none"
                         />
                       ) : (
                         <div
@@ -390,7 +390,7 @@ export default function PersonaEditor({
                         <button
                           onClick={handleSaveEdit}
                           disabled={!editForm.name.trim() || isLoading}
-                          className="px-4 py-2 bg-amber-500 text-white text-sm rounded-lg hover:bg-amber-600 transition-colors disabled:opacity-50"
+                          className="px-4 py-2 bg-pink-500 text-white text-sm rounded-lg hover:bg-pink-600 transition-colors disabled:opacity-50"
                         >
                           {t("persona.save")}
                         </button>

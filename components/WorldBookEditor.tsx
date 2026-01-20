@@ -612,10 +612,10 @@ export default function WorldBookEditor({
       <div className="h-full flex items-center justify-center breathing-bg">
         <div className="flex flex-col items-center">
           <div className="relative w-16 h-16">
-            <div className="absolute inset-0 rounded-full border-2 border-t-[#f9c86d] border-r-[#c0a480] border-b-[#a18d6f] border-l-transparent animate-spin"></div>
-            <div className="absolute inset-2 rounded-full border-2 border-t-[#a18d6f] border-r-[#f9c86d] border-b-[#c0a480] border-l-transparent animate-spin-slow"></div>
+            <div className="absolute inset-0 rounded-full border-2 border-t-[#f472b6] border-r-[#f9a8d4] border-b-[#a18d6f] border-l-transparent animate-spin"></div>
+            <div className="absolute inset-2 rounded-full border-2 border-t-[#a18d6f] border-r-[#f472b6] border-b-[#f9a8d4] border-l-transparent animate-spin-slow"></div>
           </div>
-          <p className="mt-4 text-[#c0a480] magical-text">{t("worldBook.loading")}</p>
+          <p className="mt-4 text-[#f9a8d4] magical-text">{t("worldBook.loading")}</p>
         </div>
       </div>
     );
@@ -637,7 +637,7 @@ export default function WorldBookEditor({
             <div className={`hidden md:flex items-center space-x-2 text-xs text-[#a18d6f] ${serifFontClass} flex-shrink-0`}>
               <span className="whitespace-nowrap">{t("worldBook.totalCount")} {entries.length}</span>
               <span>•</span>
-              <span className="text-amber-400 whitespace-nowrap">{t("worldBook.enabledCount")} {entries.filter(e => e.isActive).length}</span>
+              <span className="text-pink-400 whitespace-nowrap">{t("worldBook.enabledCount")} {entries.filter(e => e.isActive).length}</span>
               <span>•</span>
               <span className="text-rose-400 whitespace-nowrap">{t("worldBook.disabledCount")} {entries.filter(e => !e.isActive).length}</span>
               {filterBy !== "all" && (
@@ -711,7 +711,7 @@ export default function WorldBookEditor({
         <div className="flex flex-col sm:flex-row sm:items-center gap-2">
           <div className="flex items-center gap-1 sm:gap-2">
             <div className="flex items-center gap-1 sm:gap-1.5">
-              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-400/80">
+              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-pink-400/80">
                 <path d="M3 6h18M7 12h10m-7 6h4"></path>
               </svg>
               <label className={`text-[10px] sm:text-xs text-[#a18d6f] font-medium ${serifFontClass}`}>
@@ -763,7 +763,7 @@ export default function WorldBookEditor({
             >
               <div className={`flex items-center justify-center w-3 h-3 sm:w-4 sm:h-4 rounded-full 
                     bg-gradient-to-br ${sortOrder === "asc" 
-      ? "from-amber-500/20 to-amber-600/30 text-amber-400" 
+      ? "from-amber-500/20 to-amber-600/30 text-pink-400" 
       : "from-blue-500/20 to-blue-600/30 text-blue-400"} 
                     transition-all duration-300 group-hover:scale-110`}>
                 <span className="text-[8px] sm:text-xs font-bold">
@@ -854,7 +854,7 @@ export default function WorldBookEditor({
                         <span
                           className={`inline-block h-3 w-3 sm:h-4 sm:w-4 transform rounded-full shadow-lg transition-all duration-300 ${
                             entry.isActive 
-                              ? "translate-x-5 sm:translate-x-6 bg-gradient-to-br from-amber-300 via-amber-200 to-amber-300 shadow-amber-400/30" 
+                              ? "translate-x-5 sm:translate-x-6 bg-gradient-to-br from-pink-300 via-amber-200 to-pink-300 shadow-pink-400/30" 
                               : "translate-x-1 bg-gradient-to-br from-stone-300 via-stone-200 to-stone-300 shadow-stone-400/30"
                           }`}
                         />
@@ -870,7 +870,7 @@ export default function WorldBookEditor({
                                 : "bg-gradient-to-br from-slate-800/60 via-stone-700/40 to-slate-800/60 text-stone-300/90 border-stone-500/30 hover:from-slate-700/70 hover:via-stone-600/50 hover:to-slate-700/70 hover:border-stone-400/40 hover:text-stone-200 hover:shadow-lg hover:shadow-stone-500/10"
                             }`}>
                               <span className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full mr-1 sm:mr-2 ${
-                                entry.isActive ? "bg-amber-400/80 shadow-sm shadow-amber-400/50" : "bg-stone-400/80 shadow-sm shadow-stone-400/50"
+                                entry.isActive ? "bg-pink-400/80 shadow-sm shadow-pink-400/50" : "bg-stone-400/80 shadow-sm shadow-stone-400/50"
                               }`}></span>
                               <span className="hidden sm:inline">{entry.isActive ? t("worldBook.enabled") : t("worldBook.disabled")}</span>
                               <span className="sm:hidden">{entry.isActive ? "ON" : "OFF"}</span>
@@ -937,7 +937,7 @@ export default function WorldBookEditor({
                             className="inline-flex items-center text-[10px] sm:text-xs bg-gradient-to-br from-slate-800/60 via-amber-900/30 to-slate-800/60 backdrop-blur-sm border border-amber-600/20 text-amber-200/90 px-1.5 sm:px-3 py-1 sm:py-1.5 rounded-lg font-medium hover:from-slate-700/70 hover:via-amber-800/40 hover:to-slate-700/70 hover:border-amber-500/30 hover:text-amber-100 hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-200 cursor-default"
                             title={key}
                           >
-                            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-amber-400/70 rounded-full mr-1 sm:mr-2 shadow-sm shadow-amber-400/50"></span>
+                            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-pink-400/70 rounded-full mr-1 sm:mr-2 shadow-sm shadow-pink-400/50"></span>
                             <span className="truncate max-w-[40px] sm:max-w-[80px]">{key}</span>
                           </span>
                         ))}
@@ -952,18 +952,18 @@ export default function WorldBookEditor({
                         )}
                       </div>
                     </td>
-                    <td className="p-1.5 sm:p-3 text-xs sm:text-sm text-[#c0a480] whitespace-nowrap overflow-hidden">
+                    <td className="p-1.5 sm:p-3 text-xs sm:text-sm text-[#f9a8d4] whitespace-nowrap overflow-hidden">
                       <span className="block truncate text-[10px] sm:text-sm" title={getPositionText(entry.position)}>
                         {getPositionText(entry.position)}
                       </span>
                     </td>
-                    <td className="p-1.5 sm:p-3 text-xs sm:text-sm text-[#c0a480]">
+                    <td className="p-1.5 sm:p-3 text-xs sm:text-sm text-[#f9a8d4]">
                       {entry.depth}
                     </td>
-                    <td className="p-1.5 sm:p-3 text-xs sm:text-sm text-[#c0a480]">
+                    <td className="p-1.5 sm:p-3 text-xs sm:text-sm text-[#f9a8d4]">
                       {entry.contentLength}
                     </td>
-                    <td className="p-1.5 sm:p-3 text-xs sm:text-sm text-[#c0a480]">
+                    <td className="p-1.5 sm:p-3 text-xs sm:text-sm text-[#f9a8d4]">
                       {entry.insertion_order}
                     </td>
                     <td className="p-1.5 sm:p-3">
@@ -1003,9 +1003,9 @@ export default function WorldBookEditor({
                           <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent opacity-0 group-hover/expanded:opacity-100 transition-opacity duration-300"></div>
                           <div className="relative z-10">
                             <div>
-                              <h4 className="text-xs sm:text-sm font-medium text-[#a18d6f] mb-1 sm:mb-2 group-hover/expanded:text-amber-400 transition-colors duration-300 flex items-center justify-between">
+                              <h4 className="text-xs sm:text-sm font-medium text-[#a18d6f] mb-1 sm:mb-2 group-hover/expanded:text-pink-400 transition-colors duration-300 flex items-center justify-between">
                                 <div className="flex items-center">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1 sm:mr-2 group-hover/expanded:text-amber-400 transition-colors duration-300">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1 sm:mr-2 group-hover/expanded:text-pink-400 transition-colors duration-300">
                                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                                     <polyline points="14 2 14 8 20 8"></polyline>
                                     <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -1034,8 +1034,8 @@ export default function WorldBookEditor({
                             
                             {entry.secondary_keys.length > 0 && (
                               <div>
-                                <h4 className="text-xs sm:text-sm font-medium text-[#a18d6f] mb-1 sm:mb-2 mt-2 sm:mt-3 group-hover/expanded:text-amber-400 transition-colors duration-300 flex items-center">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1 sm:mr-2 group-hover/expanded:text-amber-400 transition-colors duration-300">
+                                <h4 className="text-xs sm:text-sm font-medium text-[#a18d6f] mb-1 sm:mb-2 mt-2 sm:mt-3 group-hover/expanded:text-pink-400 transition-colors duration-300 flex items-center">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1 sm:mr-2 group-hover/expanded:text-pink-400 transition-colors duration-300">
                                     <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
                                     <line x1="7" y1="7" x2="7.01" y2="7"></line>
                                   </svg>
@@ -1059,26 +1059,26 @@ export default function WorldBookEditor({
                             
                             <div className="grid grid-cols-2 gap-2 sm:gap-4 text-[10px] sm:text-xs mt-2 sm:mt-3 bg-[#1a1816]/60 p-2 sm:p-3 rounded-md border border-[#534741]/30 group-hover/expanded:border-[#534741]/60 transition-all duration-300">
                               <div>
-                                <span className="text-[#a18d6f] group-hover/expanded:text-amber-400/70 transition-colors duration-300">{t("worldBook.selectiveMatching")}</span>
+                                <span className="text-[#a18d6f] group-hover/expanded:text-pink-400/70 transition-colors duration-300">{t("worldBook.selectiveMatching")}</span>
                                 <span className="ml-1 sm:ml-2 text-[#eae6db]">{entry.selective ? t("worldBook.yes") : t("worldBook.no")}</span>
                               </div>
                               <div>
-                                <span className="text-[#a18d6f] group-hover/expanded:text-amber-400/70 transition-colors duration-300">{t("worldBook.tokenCount")}</span>
+                                <span className="text-[#a18d6f] group-hover/expanded:text-pink-400/70 transition-colors duration-300">{t("worldBook.tokenCount")}</span>
                                 <span className="ml-1 sm:ml-2 text-[#eae6db]">{entry.tokens || t("worldBook.notCalculated")}</span>
                               </div>
                               <div>
-                                <span className="text-[#a18d6f] group-hover/expanded:text-amber-400/70 transition-colors duration-300">{t("worldBook.lastUpdated")}</span>
+                                <span className="text-[#a18d6f] group-hover/expanded:text-pink-400/70 transition-colors duration-300">{t("worldBook.lastUpdated")}</span>
                                 <span className="ml-1 sm:ml-2 text-[#eae6db]">
                                   {new Date(entry.lastUpdated).toLocaleDateString()}
                                 </span>
                               </div>
                               <div>
-                                <span className="text-[#a18d6f] group-hover/expanded:text-amber-400/70 transition-colors duration-300">{t("worldBook.totalKeywords")}</span>
+                                <span className="text-[#a18d6f] group-hover/expanded:text-pink-400/70 transition-colors duration-300">{t("worldBook.totalKeywords")}</span>
                                 <span className="ml-1 sm:ml-2 text-[#eae6db]">{entry.keyCount + entry.secondaryKeyCount}</span>
                               </div>
                               {entry.isImported && entry.importedAt && (
                                 <div className="col-span-2">
-                                  <span className="text-[#a18d6f] group-hover/expanded:text-amber-400/70 transition-colors duration-300">{t("worldBook.importedAt")}</span>
+                                  <span className="text-[#a18d6f] group-hover/expanded:text-pink-400/70 transition-colors duration-300">{t("worldBook.importedAt")}</span>
                                   <span className="ml-1 sm:ml-2 text-[#eae6db]">
                                     {new Date(entry.importedAt).toLocaleDateString()}
                                   </span>

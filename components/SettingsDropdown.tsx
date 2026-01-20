@@ -133,7 +133,7 @@ export default function SettingsDropdown({ toggleModelSidebar }: SettingsDropdow
       <button
         onClick={() => setIsOpen(!isOpen)}
         data-tour="settings-button"
-        className="w-8 h-8 flex items-center justify-center text-[#f4e8c1] bg-[#1c1c1c] rounded-lg border border-[#333333] shadow-inner transition-all duration-300 hover:bg-[#252525] hover:border-[#444444] hover:text-amber-400 hover:shadow-[0_0_8px_rgba(251,146,60,0.4)]"
+        className="w-8 h-8 flex items-center justify-center text-[#f4e8c1] bg-[#1c1c1c] rounded-lg border border-[#333333] shadow-inner transition-all duration-300 hover:bg-[#252525] hover:border-[#444444] hover:text-pink-400 hover:shadow-[0_0_8px_rgba(244,114,182,0.4)]"
         aria-label={t("common.settings")}
         aria-expanded={isOpen}
       >

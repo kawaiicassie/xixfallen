@@ -317,10 +317,10 @@ export default function RegexScriptEditor({ onClose, characterName, characterId 
       <div className="h-full flex items-center justify-center bg-[#1a1816]">
         <div className="flex flex-col items-center">
           <div className="relative w-16 h-16">
-            <div className="absolute inset-0 rounded-full border-2 border-t-[#f9c86d] border-r-[#c0a480] border-b-[#a18d6f] border-l-transparent animate-spin"></div>
-            <div className="absolute inset-2 rounded-full border-2 border-t-[#a18d6f] border-r-[#f9c86d] border-b-[#c0a480] border-l-transparent animate-spin-slow"></div>
+            <div className="absolute inset-0 rounded-full border-2 border-t-[#f472b6] border-r-[#f9a8d4] border-b-[#a18d6f] border-l-transparent animate-spin"></div>
+            <div className="absolute inset-2 rounded-full border-2 border-t-[#a18d6f] border-r-[#f472b6] border-b-[#f9a8d4] border-l-transparent animate-spin-slow"></div>
           </div>
-          <p className="mt-4 text-[#c0a480]">{t("regexScriptEditor.loading") || "Loading..."}</p>
+          <p className="mt-4 text-[#f9a8d4]">{t("regexScriptEditor.loading") || "Loading..."}</p>
         </div>
       </div>
     );
@@ -343,7 +343,7 @@ export default function RegexScriptEditor({ onClose, characterName, characterId 
             <div className={`hidden md:flex items-center space-x-2 text-xs text-[#a18d6f] ${serifFontClass} flex-shrink-0`}>
               <span className="whitespace-nowrap">{t("regexScriptEditor.totalCount")} {Object.keys(scripts).length}</span>
               <span>•</span>
-              <span className="text-amber-400 whitespace-nowrap">
+              <span className="text-pink-400 whitespace-nowrap">
                 {t("regexScriptEditor.enabledCount")} {Object.values(scripts).filter(s => !s.disabled).length}
               </span>
               <span>•</span>
@@ -419,14 +419,14 @@ export default function RegexScriptEditor({ onClose, characterName, characterId 
           <div className="flex items-center space-x-2 sm:space-x-4 text-[10px] sm:text-xs text-[#a18d6f] bg-[#252220] px-2 sm:px-3 py-1.5 sm:py-2 rounded border border-[#534741] flex-shrink-0 overflow-hidden">
             <div className="flex items-center space-x-1 sm:space-x-2">
               <span className={`whitespace-nowrap ${fontClass} truncate`}>{t("regexScriptEditor.globalEnabled")}:</span>
-              <span className={`${settings.enabled ? "text-amber-400" : "text-rose-400"} font-medium flex-shrink-0`}>
+              <span className={`${settings.enabled ? "text-pink-400" : "text-rose-400"} font-medium flex-shrink-0`}>
                 {settings.enabled ? t("regexScriptEditor.yes") : t("regexScriptEditor.no")}
               </span>
             </div>
             <span className="hidden sm:inline">•</span>
             <div className="flex items-center space-x-1 sm:space-x-2">
               <span className={`whitespace-nowrap ${fontClass} truncate`}>{t("regexScriptEditor.applyToResponse")}:</span>
-              <span className={`${settings.applyToResponse ? "text-amber-400" : "text-rose-400"} font-medium flex-shrink-0`}>
+              <span className={`${settings.applyToResponse ? "text-pink-400" : "text-rose-400"} font-medium flex-shrink-0`}>
                 {settings.applyToResponse ? t("regexScriptEditor.yes") : t("regexScriptEditor.no")}
               </span>
             </div>
@@ -439,7 +439,7 @@ export default function RegexScriptEditor({ onClose, characterName, characterId 
           <div className="flex flex-col sm:flex-row sm:items-center gap-2">
             <div className="flex items-center gap-1.5 sm:gap-2">
               <div className="flex items-center gap-1 sm:gap-1.5">
-                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-400/80">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-pink-400/80">
                   <path d="M3 6h18M7 12h10m-7 6h4"></path>
                 </svg>
                 <label className={`text-[10px] sm:text-xs text-[#a18d6f] font-medium ${serifFontClass}`}>
@@ -486,7 +486,7 @@ export default function RegexScriptEditor({ onClose, characterName, characterId 
               >
                 <div className={`flex items-center justify-center w-3 h-3 sm:w-4 sm:h-4 rounded-full 
                   bg-gradient-to-br ${sortOrder === "asc" 
-      ? "from-amber-500/20 to-amber-600/30 text-amber-400" 
+      ? "from-amber-500/20 to-amber-600/30 text-pink-400" 
       : "from-blue-500/20 to-blue-600/30 text-blue-400"} 
                   transition-all duration-300 group-hover:scale-110`}>
                   <span className="text-[10px] sm:text-xs font-bold">
@@ -668,7 +668,7 @@ export default function RegexScriptEditor({ onClose, characterName, characterId 
                             : "bg-gradient-to-br from-slate-800/60 via-stone-700/40 to-slate-800/60 text-stone-300/90 border-stone-500/30"
                         }`}>
                           <span className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full mr-1 sm:mr-2 ${
-                            !script.disabled ? "bg-amber-400/80" : "bg-stone-400/80"
+                            !script.disabled ? "bg-pink-400/80" : "bg-stone-400/80"
                           }`}></span>
                           {script.disabled ? t("regexScriptEditor.disabled") : t("regexScriptEditor.enabled")}
                         </span>
@@ -683,7 +683,7 @@ export default function RegexScriptEditor({ onClose, characterName, characterId 
                       {!isExpanded && (
                         <div className={`text-xs sm:text-sm ${fontClass}`}>
                           <span className="text-[#a18d6f]">{t("regexScriptEditor.findRegex")}:</span>
-                          <code className="ml-1 sm:ml-2 px-1.5 sm:px-2 py-0.5 sm:py-1 bg-[#1a1816] rounded text-[#f9c86d] font-mono text-[10px] sm:text-xs cursor-pointer hover:bg-[#252220] transition-colors break-all"
+                          <code className="ml-1 sm:ml-2 px-1.5 sm:px-2 py-0.5 sm:py-1 bg-[#1a1816] rounded text-[#f472b6] font-mono text-[10px] sm:text-xs cursor-pointer hover:bg-[#252220] transition-colors break-all"
                             onClick={() => toggleScriptExpansion(scriptId)}>
                             {truncateText(script.findRegex, window.innerWidth < 640 ? 30 : 50)}
                           </code>
@@ -695,7 +695,7 @@ export default function RegexScriptEditor({ onClose, characterName, characterId 
                       <div className="p-2 sm:p-4 space-y-2 sm:space-y-3 bg-[#1a1816]/50">
                         <div className={`text-xs sm:text-sm ${fontClass}`}>
                           <span className="text-[#a18d6f] block mb-1">{t("regexScriptEditor.findRegex")}:</span>
-                          <code className="block px-2 sm:px-3 py-1.5 sm:py-2 bg-[#1a1816] rounded text-[#f9c86d] font-mono text-[10px] sm:text-xs border border-[#534741]/30 break-all">
+                          <code className="block px-2 sm:px-3 py-1.5 sm:py-2 bg-[#1a1816] rounded text-[#f472b6] font-mono text-[10px] sm:text-xs border border-[#534741]/30 break-all">
                             {script.findRegex}
                           </code>
                         </div>

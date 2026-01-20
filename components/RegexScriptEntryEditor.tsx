@@ -107,7 +107,7 @@ export default function RegexScriptEntryEditor({
         <div className="relative z-10">
           <div className="flex justify-between items-center mb-5">
             <h2 className={`text-lg text-[#eae6db] ${serifFontClass} font-medium`}>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-400 via-orange-300 to-yellow-400">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-orange-300 to-yellow-400">
                 {editingScript?.id ? t("regexScriptEditor.editScript") : t("regexScriptEditor.newScript")}
               </span>
             </h2>
@@ -145,7 +145,7 @@ export default function RegexScriptEntryEditor({
                 type="text"
                 value={localScript.findRegex || ""}
                 onChange={(e) => updateScript({ findRegex: e.target.value })}
-                className="w-full px-3 py-2 bg-gradient-to-br from-[#1a1816] to-[#252220] border border-[#534741]/60 rounded-lg text-[#f9c86d] 
+                className="w-full px-3 py-2 bg-gradient-to-br from-[#1a1816] to-[#252220] border border-[#534741]/60 rounded-lg text-[#f472b6] 
                   focus:border-amber-500/60 focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition-all duration-300
                   placeholder-[#a18d6f]/70 hover:border-[#534741] font-mono text-sm"
                 placeholder={t("regexScriptEditor.findRegexPlaceholder")}

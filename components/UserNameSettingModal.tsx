@@ -108,7 +108,7 @@ export default function UserNameSettingModal({
           >
             <button 
               onClick={onClose}
-              className="absolute top-2 right-2 sm:top-4 sm:right-4 text-[#a18d6f] hover:text-[#f9c86d] transition-colors"
+              className="absolute top-2 right-2 sm:top-4 sm:right-4 text-[#a18d6f] hover:text-[#f472b6] transition-colors"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className="sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -117,7 +117,7 @@ export default function UserNameSettingModal({
             </button>
             
             <div className="text-center mb-6">
-              <h1 className="text-2xl sm:text-3xl font-bold text-[#f9c86d] mb-2 font-cinzel">
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#f472b6] mb-2 font-cinzel">
                 {t("userNameSetting.title")}
               </h1>
               <p className={`text-sm text-[#a18d6f] ${fontClass}`}>
@@ -164,7 +164,7 @@ export default function UserNameSettingModal({
                       disabled={isLoading}
                       autoComplete="off"
                       style={{
-                        caretColor: "#f9c86d",
+                        caretColor: "#f472b6",
                         caretShape: "bar",
                         background: "transparent",
                         boxShadow: "none",
@@ -203,10 +203,10 @@ export default function UserNameSettingModal({
                 <button
                   type="submit"
                   disabled={isLoading || !displayName.trim()}
-                  className={`group relative px-6 py-2 bg-transparent border border-[#c0a480] text-[#c0a480] rounded-full text-sm font-medium transition-all duration-500 hover:border-[#f9c86d] hover:text-[#f9c86d] hover:shadow-lg hover:shadow-[#c0a480]/20 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden ${serifFontClass}`}
+                  className={`group relative px-6 py-2 bg-transparent border border-[#c0a480] text-[#c0a480] rounded-full text-sm font-medium transition-all duration-500 hover:border-[#f472b6] hover:text-[#f472b6] hover:shadow-lg hover:shadow-[#c0a480]/20 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden ${serifFontClass}`}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-[#c0a480]/0 via-[#c0a480]/10 to-[#c0a480]/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-[#f9c86d]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-[#f472b6]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="relative z-10 flex items-center justify-center gap-2">
                     {isLoading ? (
                       <>
@@ -227,7 +227,7 @@ export default function UserNameSettingModal({
                       </>
                     )}
                   </div>
-                  <div className="absolute inset-0 rounded-full border border-[#f9c86d]/20 scale-105 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
+                  <div className="absolute inset-0 rounded-full border border-[#f472b6]/20 scale-105 opacity-0 group-hover:opacity-100 transition-all duration-300"></div>
                 </button>
               </div>
 

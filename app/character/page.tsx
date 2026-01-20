@@ -610,8 +610,8 @@ export default function CharacterPage() {
     return (
       <div className="flex flex-col justify-center items-center h-full fantasy-bg">
         <div className="relative w-12 h-12 flex items-center justify-center mb-4">
-          <div className="absolute inset-0 rounded-full border-2 border-t-[#f9c86d] border-r-[#c0a480] border-b-[#a18d6f] border-l-transparent animate-spin"></div>
-          <div className="absolute inset-2 rounded-full border-2 border-t-[#a18d6f] border-r-[#f9c86d] border-b-[#c0a480] border-l-transparent animate-spin-slow"></div>
+          <div className="absolute inset-0 rounded-full border-2 border-t-[#f472b6] border-r-[#f9a8d4] border-b-[#a18d6f] border-l-transparent animate-spin"></div>
+          <div className="absolute inset-2 rounded-full border-2 border-t-[#a18d6f] border-r-[#f472b6] border-b-[#f9a8d4] border-l-transparent animate-spin-slow"></div>
         </div>
         <p className={`text-[#f4e8c1] ${serifFontClass} text-center mb-2`}>
           {loadingPhase}
@@ -633,7 +633,7 @@ export default function CharacterPage() {
         <h1 className="text-2xl text-[#f4e8c1] mb-4">
           {t("characterChat.error")}
         </h1>
-        <p className="text-[#c0a480] mb-6">
+        <p className="text-[#f9a8d4] mb-6">
           {error || t("characterChat.characterNotFound")}
         </p>
         <a

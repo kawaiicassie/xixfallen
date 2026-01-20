@@ -180,7 +180,7 @@ export default function PersonaSelectorModal({
           >
             <button
               onClick={onClose}
-              className="absolute top-2 right-2 sm:top-4 sm:right-4 text-[#a18d6f] hover:text-[#f9c86d] transition-colors"
+              className="absolute top-2 right-2 sm:top-4 sm:right-4 text-[#a18d6f] hover:text-[#f472b6] transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -201,7 +201,7 @@ export default function PersonaSelectorModal({
 
             <div className="text-center mb-6">
               <h1
-                className={`text-xl sm:text-2xl font-bold text-[#f9c86d] mb-2 ${serifFontClass}`}
+                className={`text-xl sm:text-2xl font-bold text-[#f472b6] mb-2 ${serifFontClass}`}
               >
                 {t("personaSelector.title")}
               </h1>
@@ -220,7 +220,7 @@ export default function PersonaSelectorModal({
                 <div
                   className={`p-3 rounded-lg border cursor-pointer transition-all ${
                     useDefault
-                      ? "bg-amber-500/20 border-amber-500/40"
+                      ? "bg-pink-500/20 border-pink-500/40"
                       : "bg-[#2a261f]/50 border-[#534741]/50 hover:border-[#534741]"
                   }`}
                   onClick={handleUseDefaultToggle}
@@ -229,7 +229,7 @@ export default function PersonaSelectorModal({
                     <div
                       className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
                         useDefault
-                          ? "border-amber-400 bg-amber-400"
+                          ? "border-pink-400 bg-pink-400"
                           : "border-[#534741]"
                       }`}
                     >
@@ -248,7 +248,7 @@ export default function PersonaSelectorModal({
                     </div>
                     <div className="flex-1">
                       <div
-                        className={`text-sm font-medium ${useDefault ? "text-amber-300" : "text-[#c0a480]"} ${fontClass}`}
+                        className={`text-sm font-medium ${useDefault ? "text-pink-300" : "text-[#c0a480]"} ${fontClass}`}
                       >
                         {t("personaSelector.useDefault")}
                       </div>
@@ -281,7 +281,7 @@ export default function PersonaSelectorModal({
                         onClick={() => setSelectedPersonaId(persona.id)}
                       >
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-xs font-bold text-white">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-400 to-pink-500 flex items-center justify-center text-xs font-bold text-white">
                             {persona.name.charAt(0).toUpperCase()}
                           </div>
                           <div className="flex-1 min-w-0">
@@ -292,7 +292,7 @@ export default function PersonaSelectorModal({
                                 {persona.name}
                               </span>
                               {persona.isDefault && (
-                                <span className="text-xs px-1.5 py-0.5 bg-amber-500/20 text-amber-400 rounded">
+                                <span className="text-xs px-1.5 py-0.5 bg-pink-500/20 text-pink-400 rounded">
                                   {t("persona.default")}
                                 </span>
                               )}
@@ -330,7 +330,7 @@ export default function PersonaSelectorModal({
                       {t("personaSelector.currentPersona")}
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-xs font-bold text-white">
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-pink-400 to-pink-500 flex items-center justify-center text-xs font-bold text-white">
                         {currentPersona.name.charAt(0).toUpperCase()}
                       </div>
                       <span
@@ -346,7 +346,7 @@ export default function PersonaSelectorModal({
                 <button
                   onClick={handleSave}
                   disabled={isSaving || (!useDefault && !selectedPersonaId)}
-                  className={`w-full group relative px-6 py-3 bg-transparent border border-[#c0a480] text-[#c0a480] rounded-lg text-sm font-medium transition-all duration-500 hover:border-[#f9c86d] hover:text-[#f9c86d] hover:shadow-lg hover:shadow-[#c0a480]/20 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden ${serifFontClass}`}
+                  className={`w-full group relative px-6 py-3 bg-transparent border border-[#c0a480] text-[#c0a480] rounded-lg text-sm font-medium transition-all duration-500 hover:border-[#f472b6] hover:text-[#f472b6] hover:shadow-lg hover:shadow-[#c0a480]/20 disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden ${serifFontClass}`}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-[#c0a480]/0 via-[#c0a480]/10 to-[#c0a480]/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
                   <div className="relative z-10 flex items-center justify-center gap-2">

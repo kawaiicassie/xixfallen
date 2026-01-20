@@ -198,7 +198,7 @@ export default function PluginManagerModal({ isOpen, onClose }: PluginManagerMod
               {/* 头部 */}
               <div className="flex items-center justify-between p-6 pb-4">
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-gradient-to-br from-[#f4e8c1]/20 to-[#d1a35c]/20 rounded-xl">
+                  <div className="p-2 bg-gradient-to-br from-[#f4e8c1]/20 to-[#f472b6]/20 rounded-xl">
                     <Package className="w-5 h-5 text-[#f4e8c1]" />
                   </div>
                   <div>
@@ -350,7 +350,7 @@ export default function PluginManagerModal({ isOpen, onClose }: PluginManagerMod
                           {/* 插件信息 */}
                           <div className="flex items-start space-x-4 flex-1">
                             {/* 插件图标 */}
-                            <div className="w-12 h-12 bg-gradient-to-br from-[#534741]/40 to-[#2a261f]/60 rounded-xl flex items-center justify-center overflow-hidden group-hover:from-[#f4e8c1]/20 group-hover:to-[#d1a35c]/20 transition-all duration-300">
+                            <div className="w-12 h-12 bg-gradient-to-br from-[#534741]/40 to-[#2a261f]/60 rounded-xl flex items-center justify-center overflow-hidden group-hover:from-[#f4e8c1]/20 group-hover:to-[#f472b6]/20 transition-all duration-300">
                               {plugin.manifest.icon ? (
                                 // Check if icon is a URL or emoji/text
                                 plugin.manifest.icon.startsWith("http") || plugin.manifest.icon.startsWith("/") ? (
@@ -360,9 +360,9 @@ export default function PluginManagerModal({ isOpen, onClose }: PluginManagerMod
                                     <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                       <circle cx="16" cy="16" r="15" fill="#2a261f" stroke="#f4e8c1" strokeWidth="1"/>
                                       <rect x="7" y="20" width="2.5" height="6" fill="#56b3b4"/>
-                                      <rect x="11" y="17" width="2.5" height="9" fill="#d1a35c"/>
+                                      <rect x="11" y="17" width="2.5" height="9" fill="#f472b6"/>
                                       <rect x="15" y="14" width="2.5" height="12" fill="#c093ff"/>
-                                      <rect x="19" y="11" width="2.5" height="15" fill="#f9c86d"/>
+                                      <rect x="19" y="11" width="2.5" height="15" fill="#f472b6"/>
                                       <rect x="23" y="16" width="2.5" height="10" fill="#59d3a2"/>
                                     </svg>
                                   ) : (

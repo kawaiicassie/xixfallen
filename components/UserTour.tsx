@@ -244,13 +244,13 @@ export default function UserTour({ steps, isVisible, onComplete, onSkip }: UserT
 
       {currentStepData.target !== "body" && (
         <div
-          className="absolute border-2 border-[#f9c86d] rounded-lg shadow-lg pointer-events-none"
+          className="absolute border-2 border-[#f472b6] rounded-lg shadow-lg pointer-events-none"
           style={{
             top: targetRect.top - 4,
             left: targetRect.left - 4,
             width: targetRect.width + 8,
             height: targetRect.height + 8,
-            boxShadow: "0 0 20px rgba(249, 200, 109, 0.6)",
+            boxShadow: "0 0 20px rgba(244, 114, 182, 0.6)",
           }}
         />
       )}
@@ -281,8 +281,8 @@ export default function UserTour({ steps, isVisible, onComplete, onSkip }: UserT
               <div
                 key={index}
                 className={`w-2 h-2 rounded-full ${
-                  index === currentStep ? "bg-[#f9c86d]" : 
-                    index < currentStep ? "bg-[#c0a480]" : "bg-[#534741]"
+                  index === currentStep ? "bg-[#f472b6]" : 
+                    index < currentStep ? "bg-[#f9a8d4]" : "bg-[#534741]"
                 }`}
               />
             ))}
@@ -322,7 +322,7 @@ export default function UserTour({ steps, isVisible, onComplete, onSkip }: UserT
                   localStorage.setItem("language", "zh");
                   nextStep();
                 }}
-                className={`px-4 py-1.5 text-sm bg-[#f9c86d] text-[#1a1816] rounded hover:bg-[#c0a480] transition-colors font-medium ${serifFontClass}`}
+                className={`px-4 py-1.5 text-sm bg-[#f472b6] text-[#1a1816] rounded hover:bg-[#f9a8d4] transition-colors font-medium ${serifFontClass}`}
               >
                 中文
               </button>
@@ -333,7 +333,7 @@ export default function UserTour({ steps, isVisible, onComplete, onSkip }: UserT
                   localStorage.setItem("language", "en");
                   nextStep();
                 }}
-                className={`px-4 py-1.5 text-sm bg-[#f9c86d] text-[#1a1816] rounded hover:bg-[#c0a480] transition-colors font-medium ${serifFontClass}`}
+                className={`px-4 py-1.5 text-sm bg-[#f472b6] text-[#1a1816] rounded hover:bg-[#f9a8d4] transition-colors font-medium ${serifFontClass}`}
               >
                 English
               </button>
@@ -341,7 +341,7 @@ export default function UserTour({ steps, isVisible, onComplete, onSkip }: UserT
           ) : (
             <button
               onClick={nextStep}
-              className={`px-4 py-1.5 text-sm bg-[#f9c86d] text-[#1a1816] rounded hover:bg-[#c0a480] transition-colors font-medium ${serifFontClass}`}
+              className={`px-4 py-1.5 text-sm bg-[#f472b6] text-[#1a1816] rounded hover:bg-[#f9a8d4] transition-colors font-medium ${serifFontClass}`}
             >
               {currentStep === steps.length - 1 
                 ? (t("tour.finish") || "完成") 

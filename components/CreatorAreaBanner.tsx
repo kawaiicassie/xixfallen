@@ -55,17 +55,17 @@ export default function CreatorAreaBanner({
         <div className="flex items-center space-x-4">
           <button
             onClick={onBack}
-            className="group p-2.5 bg-black/40 border border-amber-500/30 rounded-xl hover:bg-black/50 hover:border-amber-400/50 transition-all duration-200 backdrop-blur-sm flex-shrink-0"
+            className="group p-2.5 bg-black/40 border border-pink-500/30 rounded-xl hover:bg-black/50 hover:border-pink-400/50 transition-all duration-200 backdrop-blur-sm flex-shrink-0"
           >
-            <ArrowLeft className="w-4 h-4 text-[#c0a480] group-hover:text-amber-400 transition-colors" />
+            <ArrowLeft className="w-4 h-4 text-[#c0a480] group-hover:text-pink-400 transition-colors" />
           </button>
           
           <div className="flex items-center space-x-3">
             <h2 className={`text-lg md:text-xl text-[#eae6db] magical-text ${serifFontClass} truncate max-w-[200px] md:max-w-[300px]`}>
               {session?.title || "创作工坊"}
             </h2>
-            <div className="p-1.5 rounded-lg bg-gradient-to-r from-amber-500/20 to-orange-400/20 border border-amber-500/30 flex-shrink-0">
-              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-amber-400 fantasy-glow" />
+            <div className="p-1.5 rounded-lg bg-gradient-to-r from-pink-500/20 to-pink-400/20 border border-pink-500/30 flex-shrink-0">
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-pink-400 fantasy-glow" />
             </div>
           </div>
         </div>
@@ -82,7 +82,7 @@ export default function CreatorAreaBanner({
       {/* Right side - Optional status indicator */}
       <div className="flex items-center space-x-2 flex-shrink-0">
         <div className="hidden sm:flex items-center space-x-2">
-          <div className="w-2 h-2 bg-amber-400 rounded-full animate-pulse"></div>
+          <div className="w-2 h-2 bg-pink-400 rounded-full animate-pulse"></div>
           <span className={`text-xs text-[#c0a480]/70 ${fontClass}`}>
             Active
           </span>
