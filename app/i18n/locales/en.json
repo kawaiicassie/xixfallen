@@ -201,7 +201,32 @@
     "usernameRequired": "Username is required",
     "usernameLength": "Username must be between 3 and 30 characters",
     "usernameUpdated": "Username updated successfully",
-    "updateFailed": "Update failed, please try again"
+    "updateFailed": "Update failed, please try again",
+    "personal": "Personal",
+    "managePersonal": "Manage Personal",
+    "personalDescription": "Create and manage your personas for roleplay"
+  },
+  "personal": {
+    "title": "Personal Manager",
+    "subtitle": "Create and manage your personas for roleplay",
+    "name": "Name",
+    "description": "Description",
+    "personality": "Personality",
+    "edit": "Edit",
+    "delete": "Delete",
+    "setDefault": "Set as Default",
+    "addNew": "Add New",
+    "create": "Create",
+    "cancel": "Cancel",
+    "save": "Save",
+    "confirmDelete": "Are you sure you want to delete \"{name}\"?",
+    "default": "Default",
+    "selectOrCreate": "Select a personal or create a new one",
+    "noDescription": "No description",
+    "noPersonality": "No personality defined",
+    "namePlaceholder": "Enter personal name...",
+    "descriptionPlaceholder": "Describe your persona...",
+    "personalityPlaceholder": "Define personality traits..."
   },
   "storiesPage": {
     "title": "My Story Collection",

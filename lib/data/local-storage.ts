@@ -1,6 +1,6 @@
 const DB_NAME = "CharacterAppDB";
 
-const DB_VERSION = 10;
+const DB_VERSION = 11;
 
 export const CHARACTERS_RECORD_FILE = "characters_record";
 export const CHARACTER_DIALOGUES_FILE = "character_dialogues";
@@ -9,12 +9,16 @@ export const WORLD_BOOK_FILE = "world_book";
 export const REGEX_SCRIPTS_FILE = "regex_scripts";
 export const PRESET_FILE = "preset_data";
 
-// Agent-related storage constants  
+// Agent-related storage constants
 export const AGENT_CONVERSATIONS_FILE = "agent_conversations";
 
 // Memory/RAG storage constants
 export const MEMORY_ENTRIES_FILE = "memory_entries";
 export const MEMORY_EMBEDDINGS_FILE = "memory_embeddings";
+
+// Personal/Persona storage constants
+export const PERSONAL_FILE = "personal_data";
+export const PERSONAL_SETTINGS_FILE = "personal_settings";
 
 function openDB(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
@@ -54,6 +58,13 @@ function openDB(): Promise<IDBDatabase> {
       if (!db.objectStoreNames.contains(MEMORY_EMBEDDINGS_FILE)) {
         db.createObjectStore(MEMORY_EMBEDDINGS_FILE);
       }
+      // Personal/Persona object stores
+      if (!db.objectStoreNames.contains(PERSONAL_FILE)) {
+        db.createObjectStore(PERSONAL_FILE);
+      }
+      if (!db.objectStoreNames.contains(PERSONAL_SETTINGS_FILE)) {
+        db.createObjectStore(PERSONAL_SETTINGS_FILE);
+      }
     };
   });
 }
@@ -88,8 +99,8 @@ export async function initializeDataFiles(): Promise<void> {
   const db = await openDB();
 
   const storeNames = [
-    CHARACTERS_RECORD_FILE, 
-    CHARACTER_DIALOGUES_FILE, 
+    CHARACTERS_RECORD_FILE,
+    CHARACTER_DIALOGUES_FILE,
     CHARACTER_IMAGES_FILE,
     WORLD_BOOK_FILE,
     PRESET_FILE,
@@ -97,6 +108,8 @@ export async function initializeDataFiles(): Promise<void> {
     AGENT_CONVERSATIONS_FILE,
     MEMORY_ENTRIES_FILE,
     MEMORY_EMBEDDINGS_FILE,
+    PERSONAL_FILE,
+    PERSONAL_SETTINGS_FILE,
   ];
 
   await Promise.all(storeNames.map(storeName => {
@@ -170,6 +183,8 @@ export async function exportAllData(): Promise<Record<string, any>> {
     AGENT_CONVERSATIONS_FILE,
     MEMORY_ENTRIES_FILE,
     MEMORY_EMBEDDINGS_FILE,
+    PERSONAL_FILE,
+    PERSONAL_SETTINGS_FILE,
   ];
 
   for (const storeName of regularStores) {
@@ -219,6 +234,8 @@ export async function importAllData(data: Record<string, any>): Promise<void> {
     AGENT_CONVERSATIONS_FILE,
     MEMORY_ENTRIES_FILE,
     MEMORY_EMBEDDINGS_FILE,
+    PERSONAL_FILE,
+    PERSONAL_SETTINGS_FILE,
   ];
 
   for (const storeName of regularStores) {

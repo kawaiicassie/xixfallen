@@ -141,12 +141,11 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       />
       {/* Sidebar - hidden on mobile, visible on desktop */}
       <div className="fixed left-0 top-0 h-full z-10 hidden md:block">
-        <Sidebar 
-          isOpen={sidebarOpen} 
-          toggleSidebar={toggleSidebar} 
-          openLoginModal={() => setIsLoginModalOpen(true)} 
+        <Sidebar
+          isOpen={sidebarOpen}
+          toggleSidebar={toggleSidebar}
+          openLoginModal={() => setIsLoginModalOpen(true)}
           openAccountModal={() => setIsAccountModalOpen(true)}
-          openDownloadModal={() => setIsDownloadModalOpen(true)}
         />
       </div>
       <main
